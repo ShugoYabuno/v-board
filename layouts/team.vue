@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import Header from '~/components/Organisms/layouts/Header'
-import Sidebar from '~/components/Organisms/layouts/Sidebar'
+import Header from "~/components/Organisms/layouts/Header"
+import Sidebar from "~/components/Organisms/layouts/Sidebar"
 
 export default {
   components: {

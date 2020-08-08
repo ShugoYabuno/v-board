@@ -7,9 +7,9 @@
   position: fixed;
   top: 0;
   width: 100vw;
-  height: 2.5rem;
+  height: 5rem;
   color: #fff;
   background: $header-color;
-  border-bottom: 1px solid $border-color;
+  box-shadow: 0 0 7px 0 #777;
 }
 </style>

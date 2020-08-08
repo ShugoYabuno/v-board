@@ -18,9 +18,9 @@
 export default {
   data() {
     return {
-      teamId: '',
+      teamId: "",
       team: {},
-      projectId: '',
+      projectId: "",
       projects: [],
     }
   },
@@ -28,17 +28,17 @@ export default {
     const { teamId } = this.$route.params
 
     const teamParas = {
-      col1: 'teams',
+      col1: "teams",
       col1Id: teamId,
     }
-    const team = await this.$store.dispatch('db/getColId', teamParas)
+    const team = await this.$store.dispatch("db/getColId", teamParas)
 
     const projectsParams = {
-      col1: 'teams',
+      col1: "teams",
       col1Id: teamId,
-      col2: 'projects',
+      col2: "projects",
     }
-    const projects = await this.$store.dispatch('db/get2ColId', projectsParams)
+    const projects = await this.$store.dispatch("db/get2ColId", projectsParams)
 
     this.teamId = teamId
     this.team = team

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Header from '~/components/Organisms/layouts/Header'
+import Header from "~/components/Organisms/layouts/Header"
 
 export default {
   components: {

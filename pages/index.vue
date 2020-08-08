@@ -1,19 +1,17 @@
 <template>
   <div class="container">
-    <ul class="list-group">
-      <!-- <template v-for="(_team, _index) in teams">
-        <li :key="_index" class="list-group-item">
-          Cras justo odio
-        </li>
-      </template> -->
+    <!-- <ul class="list-group">
       <li
-        v-for="(_team, _index) in teams"
+        v-for="(_team, _index) in restaurants"
         :key="_index"
         class="list-group-item"
       >
-        {{ _team.name }}
+        <nuxt-link :to="`/restaurants/${_team._id}`">
+          {{ _team.name }}
+        </nuxt-link>
       </li>
-    </ul>
+    </ul> -->
+    <h1>テスト</h1>
   </div>
 </template>
 
@@ -21,12 +19,13 @@
 export default {
   data() {
     return {
-      teams: [],
+      restaurants: [],
     }
   },
   async mounted() {
-    const response = await this.$store.dispatch('db/get', 'teams')
-    this.teams = response
+    const response = await this.$store.dispatch("db/get", "test")
+    this.restaurants = response
+    console.log(this.restaurants)
   },
 }
 </script>
@@ -41,8 +40,8 @@ export default {
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;
