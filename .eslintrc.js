@@ -14,11 +14,11 @@ module.exports = {
   rules: {
     'nuxt/no-cjs-in-config': 'off',
     semi: [2, 'never'],
-    quotes: [2, 'single'],
+    quotes: [2, 'double'],
     'no-console': 'off',
     "prettier/prettier": [
       "error", {
-        "singleQuote": true,
+        "doubleQuote": true,
         "semi": false,
         "endOfLine": "auto"
       }
