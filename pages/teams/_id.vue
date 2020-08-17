@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>{{ restaurants.name }}</h1>
+    <h1>詳細</h1>
     <input @change="changeFile" ref="rfafile" type="file" />
     <input @click="regist" type="button" value="Upload" />
   </div>
@@ -16,13 +16,13 @@ export default {
     }
   },
   async mounted() {
-    const firebaseParams = {
-      col1: "restaurants",
-      col1Id: this.$route.params.id,
-    }
-    const response = await this.$store.dispatch("db/getColId", firebaseParams)
-    this.restaurants = response
-    console.log(this.restaurants)
+    // const firebaseParams = {
+    //   col1: "restaurants",
+    //   col1Id: this.$route.params.id,
+    // }
+    // const response = await this.$store.dispatch("db/getColId", firebaseParams)
+    // this.restaurants = response
+    // console.log(this.restaurants)
   },
   methods: {
     changeFile(e) {
