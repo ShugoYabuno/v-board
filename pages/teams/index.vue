@@ -35,8 +35,8 @@ export default {
     // const response = await this.$store.dispatch("db/getColId", firebaseParams)
     // this.restaurants = response
     // console.log(this.restaurants)
-    console.log(process.env.AWS_ACCESSKEYID)
-    console.log(process.env.AWS_SECRETACCESSKEY)
+    // console.log(process.env.AWS_ACCESSKEYID)
+    // console.log(process.env.AWS_SECRETACCESSKEY)
   },
   methods: {
     async handleChangeVideo(e) {
@@ -71,24 +71,39 @@ export default {
     async videoS3Upload() {
       const files = this.$refs.fileVideo
       const fileVideo = files.files[0]
+      const firestoreParams = {
+        col: "videos",
+        data: {
+          name: fileVideo.name,
+        },
+      }
+      const dbResponse = await this.$store.dispatch(
+        "db/create",
+        firestoreParams
+      )
+      const firestoreId = dbResponse.id
+
       const fileBase64 = await new Promise((resolve, reject) => {
         const reader = new FileReader()
         reader.readAsDataURL(fileVideo)
         reader.onload = () => resolve(reader.result)
         reader.onerror = (error) => reject(error)
       })
+
+      console.log(fileBase64)
+
       const fileData = fileBase64.replace(/^data:\w+\/\w+;base64,/, "")
-      const filename = "test.mp4"
+      const fileName = `post/${firestoreId}`
       const params = {
         Bucket: process.env.S3_BUCKET_RAW_DATA,
-        Key: filename,
+        Key: fileName,
         ContentType: "video/mp4",
         Body: Buffer.from(fileData, "base64"),
         ACL: "public-read",
         CacheControl: "no-cache, no-store",
       }
-      const s3Url = `https://${process.env.S3_BUCKET_RAW_DATA}.s3.amazonaws.com/post/${filename}`
-      const response = await new Promise((resolve) => {
+      const s3Url = `https://${process.env.S3_BUCKET_RAW_DATA}.s3.amazonaws.com/${fileName}`
+      const s3ResponseUrl = await new Promise((resolve) => {
         s3.putObject(params, (err, data) => {
           if (err) {
             console.log("err")
@@ -99,8 +114,15 @@ export default {
           }
         })
       })
-      console.log(response)
-      // return response
+
+      console.log(s3ResponseUrl)
+
+      firestoreParams.id = firestoreId
+      firestoreParams.data.s3_url = s3ResponseUrl
+
+      const dbUpdate = await this.$store.dispatch("db/update", firestoreParams)
+      console.log(dbUpdate)
+      // return s3ResponseUrl
     },
   },
 }

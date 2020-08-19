@@ -3,7 +3,7 @@ import { db } from "~/plugins/firebase"
 export const state = () => {}
 
 export const actions = {
-  async get(context, value) {
+  async getCollection(context, value) {
     const response = await db
       .collection(value)
       .get()
@@ -19,7 +19,7 @@ export const actions = {
       })
     return response
   },
-  async getColId(context, value) {
+  async get(context, value) {
     const { col1, col1Id } = value
     const response = await db
       .collection(col1)
@@ -33,44 +33,14 @@ export const actions = {
       })
     return response
   },
-  async get2ColId(context, value) {
-    const { col1, col1Id, col2 } = value
-    const response = await db
-      .collection(col1)
-      .doc(col1Id)
-      .collection(col2)
-      .get()
-      .then((querySnapshot) => {
-        const collection = []
-        querySnapshot.forEach((doc) =>
-          collection.push({ _id: doc.id, ...doc.data() })
-        )
-        return collection
-      })
-      .catch((err) => {
-        return err
-      })
-    return response
+  async create(context, value) {
+    const { col, data } = value
+    const res = await db.collection(col).add(data)
+    return res
   },
-  async get3Col2Id(context, value) {
-    const { col1, col1Id, col2, col2Id, col3 } = value
-    const response = await db
-      .collection(col1)
-      .doc(col1Id)
-      .collection(col2)
-      .doc(col2Id)
-      .collection(col3)
-      .get()
-      .then((querySnapshot) => {
-        const collection = []
-        querySnapshot.forEach((doc) =>
-          collection.push({ _id: doc.id, ...doc.data() })
-        )
-        return collection
-      })
-      .catch((err) => {
-        return err
-      })
-    return response
+  async update(context, value) {
+    const { col, id, data } = value
+    const res = await db.collection(col).doc(id).set(data)
+    return res
   },
 }
