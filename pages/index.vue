@@ -1,12 +1,5 @@
 <template>
-  <div class="container">
-    <input
-      ref="fileVideo"
-      type="file"
-      accept="video/*"
-      @change="handleChangeVideo"
-    />
-  </div>
+  <h1>テスト</h1>
 </template>
 
 <script>

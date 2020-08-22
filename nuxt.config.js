@@ -27,13 +27,19 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    // {
+    //   src: "~/plugins/localStorage.js",
+    //   // mode: 'client'
+    // },
+  ],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     "@nuxtjs/eslint-module",
+    "@nuxtjs/vuetify",
     // [
     //   "@nuxtjs/dotenv",
     //   {
@@ -54,7 +60,7 @@ module.exports = {
    */
   modules: [
     // Doc: https://bootstrap-vue.js.org
-    "bootstrap-vue/nuxt",
+    // "bootstrap-vue/nuxt",
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     // Doc: https://github.com/nuxt-community/dotenv-module
@@ -77,5 +83,21 @@ module.exports = {
      ** You can extend webpack config here
      */
     extend(config, ctx) {},
+  },
+  vuetify: {
+    theme: {
+      dark: true,
+      themes: {
+        dark: {
+          primary: "#368F8B",
+          secondary: "#183446",
+          accent: "#FF5722",
+          error: "#FF1744",
+          warning: "#FFEA00",
+          info: "#00B0FF",
+          success: "#76FF03",
+        },
+      },
+    },
   },
 }

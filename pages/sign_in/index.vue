@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 <template>
   <div class="container">
     <div class="links">
@@ -17,11 +18,29 @@ export default {
   },
   mounted() {
     firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
+    console.log(this.isAuth)
   },
   methods: {
-    signIn: function () {
+    signIn() {
       const provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithRedirect(provider)
+      // const auth = firebase.auth().signInWithRedirect(provider)
+      // console.log(auth)
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          const token = result.credential.accessToken
+          const user = result.user
+          console.log(token)
+          console.log(user)
+        })
+        .catch((error) => {
+          // const errorCode = error.code
+          // const errorMessage = error.message
+          // const email = error.email
+          // const credential = error.credential
+          console.log(error)
+        })
     },
   },
 }
