@@ -9,19 +9,20 @@
   >
     <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-    <v-toolbar-title>Video Share</v-toolbar-title>
+    <v-btn color="primary" depressed nuxt to="/" class="header_title"
+      >Video Share</v-btn
+    >
 
     <v-spacer></v-spacer>
 
-    <v-btn icon>
+    <v-btn icon nuxt to="/sign_in">
       <v-icon>mdi-account</v-icon>
     </v-btn>
 
     <template v-slot:extension>
-      <v-tabs align-with-title color="accent">
-        <v-tab>Tab 1</v-tab>
-        <v-tab>Tab 2</v-tab>
-        <v-tab>Tab 3</v-tab>
+      <v-tabs align-with-title color="accent" v-model="selectTab">
+        <v-tab>My Videos</v-tab>
+        <v-tab>Team Videos</v-tab>
       </v-tabs>
     </template>
   </v-app-bar>
@@ -39,8 +40,10 @@ export default {
   data() {
     return {
       collapseOnScroll: true,
+      selectTab: 0,
     }
   },
+  methods: {},
   // mounted() {
   //   firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
   //   console.log(this.isAuth)
@@ -48,14 +51,25 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-// .header {
-//   position: fixed;
-//   top: 0;
-//   width: 100vw;
-//   height: 5rem;
-//   color: #fff;
-//   background: $header-color;
-//   box-shadow: 0 0 7px 0 #777;
-// }
+<style lang="scss">
+header {
+  height: 5rem !important;
+  .v-toolbar__content {
+    height: 2.5rem !important;
+  }
+
+  .v-tabs {
+    .v-slide-group__wrapper {
+      height: 2.5rem !important;
+    }
+  }
+
+  &.v-app-bar--is-scrolled {
+    height: 3rem !important;
+
+    .header_title {
+      display: none;
+    }
+  }
+}
 </style>

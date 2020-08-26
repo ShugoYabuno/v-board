@@ -1,8 +1,15 @@
 <template>
   <v-app>
     <Header />
-    <v-sheet id="scrolling" class="overflow-y-auto" max-height="600">
-      <v-container style="height: 1000px;"><nuxt /></v-container>
+    <v-sheet
+      id="scrolling"
+      class="overflow-y-auto"
+      max-height="100vh"
+      min-height="100vh"
+    >
+      <v-container style="height: 1000px;">
+        <nuxt />
+      </v-container>
     </v-sheet>
   </v-app>
 </template>
@@ -20,7 +27,7 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   width: 100vw;
-  min-height: calc(200vh - 4rem);
-  margin-top: 4rem;
+  min-height: calc(200vh - 5rem);
+  margin-top: 5rem;
 }
 </style>

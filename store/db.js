@@ -1,4 +1,5 @@
 import { db } from "~/plugins/firebase"
+// import axios from "~/plugins/axios"
 
 export const state = () => {}
 
@@ -43,4 +44,22 @@ export const actions = {
     const res = await db.collection(col).doc(id).set(data)
     return res
   },
+  // async test(context, value) {
+  //   const data = {
+  //     // headers: {
+  //     //   authorization: token
+  //     // },
+  //     params: value,
+  //   }
+  //   console.log("store")
+  //   const response = await axios
+  //     .post("/api/v1/auth/sign", data)
+  //     .then((res) => {
+  //       return res.data
+  //     })
+  //     .catch((err) => {
+  //       return err.response.data
+  //     })
+  //   return response
+  // },
 }

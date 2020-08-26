@@ -67,13 +67,13 @@ module.exports = {
     "@nuxtjs/dotenv",
     "@nuxtjs/style-resources",
   ],
+  styleResources: {
+    scss: ["~/assets/scss/_index.scss"],
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  styleResources: {
-    scss: ["~/assets/scss/_index.scss"],
-  },
   axios: {},
   /*
    ** Build configuration
@@ -85,6 +85,8 @@ module.exports = {
     extend(config, ctx) {},
   },
   vuetify: {
+    customVariables: ["~/assets/scss/variables.scss"],
+    treeShake: true,
     theme: {
       dark: true,
       themes: {
@@ -99,5 +101,12 @@ module.exports = {
         },
       },
     },
+  },
+  serverMiddleware: [
+    // API middleware
+    "~/api/index.js",
+  ],
+  devServer: {
+    disableHostCheck: true,
   },
 }
