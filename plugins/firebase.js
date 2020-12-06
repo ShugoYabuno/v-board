@@ -10,9 +10,12 @@ if (!firebase.apps.length) {
     projectId: "video-share-d1a94",
     storageBucket: "video-share-d1a94.appspot.com",
     messagingSenderId: "91171756450",
+    appId: "1:91171756450:web:67f0fa48a017da151a3afb",
+    measurementId: "G-MTQPDP7Z5J",
   }
   firebase.initializeApp(config)
 }
 
-const db = firebase.firestore()
-export { firebase, db }
+const firestore = firebase.firestore()
+
+export { firebase, firestore }
