@@ -6,6 +6,7 @@
 
 <script>
 import videojs from "video.js"
+import "video.js/dist/video-js.css"
 
 export default {
   name: "VideoPlayer",
@@ -38,3 +39,11 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+$width: 30rem;
+.vjs_video_3-dimensions {
+  width: $width;
+  height: $width * 9 / 16;
+}
+</style>

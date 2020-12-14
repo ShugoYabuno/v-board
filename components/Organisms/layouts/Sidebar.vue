@@ -48,16 +48,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.item {
-  @include flex();
-  @include ai-center();
-  height: 2.5rem;
-  padding-left: 2rem;
-  &:hover {
-    background: #f8b862;
-  }
-  &.nuxt-link-active {
-    background: #ea5506;
-  }
-}
+// .item {
+//   @include flex();
+//   @include ai-center();
+//   height: 2.5rem;
+//   padding-left: 2rem;
+//   &:hover {
+//     background: #f8b862;
+//   }
+//   &.nuxt-link-active {
+//     background: #ea5506;
+//   }
+// }
 </style>

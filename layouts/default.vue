@@ -1,33 +1,21 @@
 <template>
-  <v-app>
-    <Header />
-    <v-sheet
-      id="scrolling"
-      class="overflow-y-auto"
-      max-height="100vh"
-      min-height="100vh"
-    >
-      <v-container style="height: 1000px;">
-        <nuxt />
-      </v-container>
-    </v-sheet>
-  </v-app>
+  <div class="flex flex-col w-screen min-h-screen">
+    <GuestHeader />
+    <div class="relative flex flex-col w-full flex-grow mt-14">
+      <nuxt />
+      <Footer />
+    </div>
+  </div>
 </template>
 
 <script>
-import Header from "~/components/Organisms/layouts/Header"
+import GuestHeader from "~/components/Organisms/layouts/GuestHeader"
+import Footer from "~/components/Organisms/layouts/Footer"
 
 export default {
   components: {
-    Header,
+    GuestHeader,
+    Footer,
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.wrapper {
-  width: 100vw;
-  min-height: calc(200vh - 5rem);
-  margin-top: 5rem;
-}
-</style>

@@ -23,7 +23,9 @@ module.exports = {
   /*
    ** Global CSS
    */
-  // css: ["~/assets/scss/_index.scss"],
+  css: [
+    // "~/assets/scss/_index.scss"
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -39,7 +41,7 @@ module.exports = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     "@nuxtjs/eslint-module",
-    "@nuxtjs/vuetify",
+    "@nuxtjs/tailwindcss",
     // [
     //   "@nuxtjs/dotenv",
     //   {
@@ -68,7 +70,7 @@ module.exports = {
     "@nuxtjs/style-resources",
   ],
   styleResources: {
-    scss: ["~/assets/scss/_index.scss"],
+    // scss: ["~/assets/scss/_index.scss"],
   },
   /*
    ** Axios module configuration
@@ -83,25 +85,42 @@ module.exports = {
      ** You can extend webpack config here
      */
     extend(config, ctx) {},
-  },
-  vuetify: {
-    customVariables: ["~/assets/scss/variables.scss"],
-    treeShake: true,
-    theme: {
-      dark: true,
-      themes: {
-        dark: {
-          primary: "#368F8B",
-          secondary: "#183446",
-          accent: "#FF5722",
-          error: "#FF1744",
-          warning: "#FFEA00",
-          info: "#00B0FF",
-          success: "#76FF03",
+    postcss: {
+      // キーとしてプラグイン名を、値として引数を追加します
+      // プラグインは前もって npm か yarn で dependencies としてインストールしておきます
+      plugins: {
+        // 値として false を渡すことによりプラグインを無効化します
+        "postcss-url": false,
+        "postcss-nested": {},
+        "postcss-responsive-type": {},
+        "postcss-hexrgba": {},
+      },
+      preset: {
+        // postcss-preset-env 設定を変更します
+        autoprefixer: {
+          grid: true,
         },
       },
     },
   },
+  // vuetify: {
+  //   customVariables: ["~/assets/scss/variables.scss"],
+  //   treeShake: true,
+  //   theme: {
+  //     dark: true,
+  //     themes: {
+  //       dark: {
+  //         primary: "#368F8B",
+  //         secondary: "#183446",
+  //         accent: "#FF5722",
+  //         error: "#FF1744",
+  //         warning: "#FFEA00",
+  //         info: "#00B0FF",
+  //         success: "#76FF03",
+  //       },
+  //     },
+  //   },
+  // },
   serverMiddleware: [
     // API middleware
     "~/api/index.js",

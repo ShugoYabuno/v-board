@@ -37,32 +37,32 @@ export default {
   },
   methods: {
     tabClick(_status) {
-      this.$emit('click', _status)
+      this.$emit("click", _status)
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.tabs {
-  @include flex();
-  height: 1.7rem;
-  background: $gray;
-  ._item {
-    width: 7rem;
-    height: 100%;
-    background: $dark-gray;
-    border-right: 1px solid $black;
-    ._p {
-      padding-left: 0.5rem;
-      line-height: 1.7rem;
-    }
-    &.active {
-      background: $black;
-    }
-    &:last-child {
-      border-right: 0;
-    }
-  }
-}
+// .tabs {
+//   @include flex();
+//   height: 1.7rem;
+//   background: $gray;
+//   ._item {
+//     width: 7rem;
+//     height: 100%;
+//     background: $dark-gray;
+//     border-right: 1px solid $black;
+//     ._p {
+//       padding-left: 0.5rem;
+//       line-height: 1.7rem;
+//     }
+//     &.active {
+//       background: $black;
+//     }
+//     &:last-child {
+//       border-right: 0;
+//     }
+//   }
+// }
 </style>

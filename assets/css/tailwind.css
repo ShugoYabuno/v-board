@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.surface-primary {
+  background-color: #fff;
+}
+
+.surface-secondory {
+  background-color: #141021;
+  opacity: .5;
+}
+
+.surface-teriary {
+  background-color: #141021;
+  opacity: .1;
+}
+
+.form-control {
+  @apply p-2 rounded-sm border-solid border-1 border-gray-5 bg-gray-1;
+}
+
+.form-control:focus {
+  @apply p-2 shadow border-solid border-1 border-focus bg-primary-1;
+}
