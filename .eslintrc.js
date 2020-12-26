@@ -21,4 +21,4 @@ module.exports = {
     "no-console": "off",
     "vue/html-closing-bracket-newline": [2, { multiline: "never" }],
   },
-};
+}

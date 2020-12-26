@@ -1,19 +1,18 @@
 <template>
-  <div class="container h-full">
-    <input
-      ref="fileVideo"
-      type="file"
-      accept="video/*"
-      @change="handleChangeVideo"
-    />
-    <video-player :options="videoOptions" v-if="videoOptions" />
+  <div class="wrapper">
+    <h1>テスト</h1>
   </div>
 </template>
 
 <script>
-import VideoPlayer from "~/components/Atoms/VideoPlayer.vue"
+// import VideoPlayer from "~/components/Atoms/VideoPlayer.vue"
 
 export default {
+  components: {
+    // VideoPlayer,
+  },
+  layout: "user",
+  // middleware: "userAuthenticated",
   data() {
     return {
       restaurants: [],
@@ -31,9 +30,7 @@ export default {
       },
     }
   },
-  components: {
-    VideoPlayer,
-  },
+
   async mounted() {
     // const firebaseParams = {
     //   col1: "restaurants",
@@ -67,6 +64,7 @@ export default {
       console.log(response)
     },
   },
+
   // async getThumbnailS3(_name) {
   //   let getThumb = ""
   //   if (this.videoInput) {

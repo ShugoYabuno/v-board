@@ -1,21 +1,17 @@
 <template>
   <div
-    class="mb-60 bg-gray-3 container flex items-center justify-center flex-grow w-full"
-  >
-    <div class="w-96 bg-gray-1 p-6 rounded-lg shadow-xl">
-      <form class="flex flex-col items-center w-full">
-        <input type="text" name="email" class="form-control w-full mb-2" />
-        <input type="text" name="password" class="form-control w-full mb-2" />
-        <button class="bg-blue w-full p-4 text-center rounded">
-          ログインする
-        </button>
-      </form>
-    </div>
+    class="bg-gray-3 flex-ij-center wrapper">
+    <LoginForm />
   </div>
 </template>
 
 <script>
+import LoginForm from "~/components/Atoms/LoginForm"
+
 export default {
+  components: {
+    LoginForm
+  },
   // data() {
   //   return {
   //     restaurants: [],
@@ -33,9 +29,7 @@ export default {
   //     },
   //   }
   // },
-  // components: {
-  //   VideoPlayer,
-  // },
+  // middleware: ["guestAuthenticated"],
   async mounted() {
     // const firebaseParams = {
     //   col1: "restaurants",
@@ -85,5 +79,5 @@ export default {
     //     reader.onerror = (error) => reject(error)
     //   })
   },
-};
+}
 </script>

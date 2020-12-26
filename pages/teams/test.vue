@@ -1,22 +1,38 @@
 <template>
-  <div class="">
+  <div class="container h-full">
     <input
       ref="fileVideo"
       type="file"
       accept="video/*"
-      @change="handleChangeVideo"
-    />
+      @change="handleChangeVideo">
+    <video-player
+      v-if="videoOptions"
+      :options="videoOptions" />
   </div>
 </template>
 
 <script>
-import "video.js/dist/video-js.css"
+import VideoPlayer from "~/components/Atoms/VideoPlayer.vue"
 
 export default {
+  components: {
+    VideoPlayer,
+  },
   data() {
     return {
       restaurants: [],
       videoInput: "",
+      videoOptions: {
+        autoplay: true,
+        controls: true,
+        sources: [
+          {
+            src:
+              "https://video-share-raw-data.s3.amazonaws.com/post/Lh5NGl7Msc6HucgbQ45x",
+            type: "video/mp4",
+          },
+        ],
+      },
     }
   },
   async mounted() {
@@ -74,35 +90,3 @@ export default {
   // },
 }
 </script>
-<style>
-/* .container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-} */
-</style>

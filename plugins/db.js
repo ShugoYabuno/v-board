@@ -3,6 +3,13 @@ import { firestore } from "./firebase"
 const db = (() => {
   const add = async (_collectionName, _data) => {
     const res = await firestore.collection(_collectionName).add(_data)
+      .then(async (docRef) => {
+        const data = await docRef.get().then(doc => doc.data())
+        return {
+          document_id: docRef.id,
+          data
+        }
+      })
 
     return res
   }

@@ -1,3 +1,7 @@
+/*
+  BASE
+*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,9 +21,33 @@
 }
 
 .form-control {
-  @apply p-2 rounded-sm border-solid border-1 border-gray-5 bg-gray-1;
+  @apply p-2 rounded border-solid border-1 border-gray-5 bg-gray-1 text-gray-9 focus:bg-secondary-1 focus:border-focus;
 }
 
-.form-control:focus {
-  @apply p-2 shadow border-solid border-1 border-focus bg-primary-1;
+.border-1-solid {
+  @apply border-1 border-solid;
+}
+
+.border-2-solid {
+  @apply border-2 border-solid;
+}
+
+.flex-ij-center {
+  @apply flex items-center justify-center;
+}
+
+.flex-i-center {
+  @apply flex items-center;
+}
+
+.flex-j-center {
+  @apply flex items-center;
+}
+
+.wh-full {
+  @apply w-full h-full;
+}
+
+.wrapper {
+  min-height: calc(100vh - 18.5rem);
 }
