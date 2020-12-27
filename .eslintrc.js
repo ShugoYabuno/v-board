@@ -19,6 +19,7 @@ module.exports = {
     semi: [2, "never"],
     quotes: [2, "double"],
     "no-console": "off",
+    "no-unused-vars": "off",
     "vue/html-closing-bracket-newline": [2, { multiline: "never" }],
   },
 }

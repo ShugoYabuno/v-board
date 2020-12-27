@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="flex items-center justify-center h-60 w-full bg-gray-1 text-font-light">
+    class="flex items-center justify-center h-60 w-full bg-gray-10 text-font-light">
     <p>Vboard</p>
   </footer>
 </template>

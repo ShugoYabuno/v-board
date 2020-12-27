@@ -21,7 +21,7 @@
 }
 
 .form-control {
-  @apply p-2 rounded border-solid border-1 border-gray-5 bg-gray-1 text-gray-9 focus:bg-secondary-1 focus:border-focus;
+  @apply p-2 rounded border-solid border-1 border-gray-50 bg-gray-10 text-gray-90 focus:bg-secondary-10 focus:border-focus;
 }
 
 .border-1-solid {

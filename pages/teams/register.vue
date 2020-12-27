@@ -1,12 +1,12 @@
 <template>
-  <div class="flex-ij-center wrapper bg-gray-3">
+  <div class="flex-ij-center wrapper bg-gray-30">
     <formModal>
-      <h2 class="mb-8 font-semibold text-center text-xl text-gray-9">
+      <h2 class="mb-8 font-semibold text-center text-xl text-gray-90">
         チームの登録
       </h2>
       <label
         for="slug"
-        class="text-gray-5 text-sm pl-2">※半角英小文字と_.-のみ有効です</label>
+        class="text-gray-50 text-sm pl-2">※半角英小文字と_.-のみ有効です</label>
       <input
         id="slug"
         v-model="teamInfo.slug"
@@ -17,7 +17,7 @@
         v-if="error.slug"
         class="text-darkbrown"
         for="slug">
-        *{{ error.slug }}
+        ※{{ error.slug }}
       </label>
       <input
         id="name"
@@ -29,12 +29,12 @@
         v-if="error.name"
         class="text-darkbrown"
         for="name">
-        *{{ error.name }}
+        ※{{ error.name }}
       </label>
       <button
         type="
         submit"
-        class="block mx-auto mt-4 px-7 py-3 text-xl rounded-xl bg-blue text-gray-1"
+        class="block mx-auto mt-4 px-7 py-3 text-xl rounded-xl bg-blue text-gray-10"
         @click="onSubmit()">
         登録
       </button>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import formModal from "~/components/_formModal"
+import formModal from "~/components/SlotFormModal"
 const teamsModel = {
   slug: "",
   name: ""
@@ -70,7 +70,7 @@ export default {
 
       const { teamInfo } = this
 
-      const resStore = await this.$store.dispatch("teamsAdd", { teamInfo })
+      const resStore = await this.$store.dispatch("addTeam", { teamInfo })
       if(!resStore) return
 
       if (resStore.status === "success") {

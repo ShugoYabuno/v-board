@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-60 bg-gray-3 flex items-center justify-center flex-grow w-full">
+    class="mb-60 bg-gray-30 flex items-center justify-center flex-grow w-full">
     <LoginForm />
   </div>
 </template>

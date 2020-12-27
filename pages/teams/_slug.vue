@@ -1,93 +1,100 @@
 <template>
-  <div class="wrapper">
-    <input
-      ref="fileVideo"
-      type="file"
-      accept="video/*"
-      @change="handleChangeVideo">
-    <video-player
-      v-if="videoOptions"
-      :options="videoOptions" />
+  <div class="wrapper bg-gray-40">
+    <p
+      v-if="teamInfo && teamInfo.data"
+      class="pt-2 ml-4 mb-2">
+      チーム名: {{ teamInfo.data.name }}
+    </p>
+    <div class="ml-4">
+      <VideoUploader :get-videos="getVideos" />
+    </div>
+    <div
+      v-if="isLoaded && videos.length >= 1"
+      class="flex flex-wrap">
+      <div
+        v-for="(video, index) in videos"
+        :key="index"
+        class="w-3/12 p-4">
+        <VideoPlayer
+          v-if="video"
+          :options="convertVideoOptions(video)" />
+      </div>
+    </div>
+    <div v-if="isLoaded && videos.length === 0">
+      <p>動画がアップロードされていません。</p>
+    </div>
   </div>
 </template>
 
 <script>
 import VideoPlayer from "~/components/Atoms/VideoPlayer"
+import VideoUploader from "~/components/Atoms/VideoUploader"
 
 export default {
   components: {
     VideoPlayer,
+    VideoUploader
   },
   layout: "user",
   data() {
     return {
-      restaurants: [],
+      teamInfo: {},
+      videos: [],
       videoInput: "",
-      videoOptions: {
-        autoplay: true,
-        controls: true,
-        sources: [
-          {
-            src:
-              "https://video-share-raw-data.s3.amazonaws.com/post/Lh5NGl7Msc6HucgbQ45x",
-            type: "video/mp4",
-          },
-        ],
-      },
+      isLoaded: false,
+      // videoOptions: {
+      //   autoplay: true,
+      //   controls: true,
+      //   sources: [
+      //     {
+      //       src:
+      //         "https://video-share-raw-data.s3.amazonaws.com/post/Lh5NGl7Msc6HucgbQ45x",
+      //       type: "video/mp4",
+      //     },
+      //   ],
+      // },
+      // videoOptions2: {
+      //   autoplay: true,
+      //   controls: true,
+      //   sources: [
+      //     {
+      //       src:
+      //         "https://video-share-raw-data.s3.amazonaws.com/post/Lh5NGl7Msc6HucgbQ45x",
+      //       type: "video/mp4",
+      //     },
+      //   ],
+      // },
     }
   },
   async mounted() {
-    // const firebaseParams = {
-    //   col1: "restaurants",
-    //   col1Id: this.$route.params.id,
-    // }
-    // const response = await this.$store.dispatch("db/getColId", firebaseParams)
-    // this.restaurants = response
-    // console.log(this.restaurants)
-    // console.log(process.env.AWS_ACCESSKEYID)
-    // console.log(process.env.AWS_SECRETACCESSKEY)
+    const resFindTeam = await this.$store.dispatch("findTeamBySlug", {
+      slug: this.$route.params.slug
+    })
+    if(!resFindTeam) return
+
+    this.teamInfo = resFindTeam[0]
+
+    await this.getVideos()
   },
   methods: {
-    getFileVideo() {
-      const files = this.$refs.fileVideo
-      const fileVideo = files.files[0]
-
-      return fileVideo
+    convertVideoOptions(_video) {
+      return {
+        sources: [
+          {
+            src: _video.data.storageUrl,
+            type: _video.data.contentType,
+          },
+        ]
+      }
     },
-    async handleChangeVideo() {
-      console.log("テスト")
-      const fileVideo = this.getFileVideo()
-      console.log(fileVideo)
+    async getVideos() {
+      this.isLoaded = false
 
-      if (fileVideo.type.startsWith("video/")) this.videoS3Upload()
-    },
-    async videoS3Upload() {
-      const fileVideo = this.getFileVideo()
+      const videos = await this.$store.dispatch("video/getByTeam")
 
-      const response = await this.$store.dispatch("video/upload", { fileVideo })
-
-      console.log(response)
-    },
+      this.videos = videos
+      this.isLoaded = true
+    }
   },
-  // async getThumbnailS3(_name) {
-  //   let getThumb = ""
-  //   if (this.videoInput) {
-  //     const files = this.$refs.fileVideo
-  //     const fileVideo = files.files[0]
-  //     const fileBase64 = await this.getBase64(fileVideo)
-  //     console.log(fileBase64)
-  //     getThumb = await this.videoS3Upload(_name, fileBase64)
-  //     console.log(getThumb)
-  //   }
-  //   return getThumb
-  // },
-  // getBase64(file) {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader()
-  //     reader.readAsDataURL(file)
-  //     reader.onload = () => resolve(reader.result)
-  //     reader.onerror = (error) => reject(error)
-  //   })
-  // },
 }
 </script>

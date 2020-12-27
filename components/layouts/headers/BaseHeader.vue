@@ -1,10 +1,10 @@
 <template>
   <header class="fixed top-0 w-full h-14 bg-primary shadow-md">
     <UserHeader
-      v-if="$store.getters.isSigned"
+      v-if="$store.getters.isAuthed"
       :is-loaded="isLoaded" />
     <GuestHeader
-      v-if="!$store.getters.isSigned"
+      v-if="!$store.getters.isAuthed"
       :is-loaded="isLoaded" />
   </header>
 </template>

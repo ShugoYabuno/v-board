@@ -1,18 +1,18 @@
 <template>
   <nav
     v-if="isLoaded"
-    class="flex-i-center h-full max-w-screen-lg w-full mx-auto text-secondary-2">
+    class="flex-i-center h-full max-w-screen-lg w-full mx-auto text-secondary-20">
     <nuxt-link
       to="/"
-      class="flex-i-center font-semibold text-2xl h-5/6 px-3 rounded transition hover:bg-primary-6">
+      class="flex-i-center font-semibold text-2xl h-5/6 px-3 rounded transition hover:bg-primary-60">
       Vboard
     </nuxt-link>
-    <!-- <font-awesome-icon icon="bars" class="ml-auto fa-lg text-secondary-2" /> -->
+    <!-- <font-awesome-icon icon="bars" class="ml-auto fa-lg text-secondary-20" /> -->
     <div
       class="flex-i-center ml-auto h-full">
       <button
-        class="flex-i-center h-5/6 px-3 rounded transition hover:bg-primary-6"
-        @click="signOut()">
+        class="flex-i-center h-5/6 px-3 rounded transition hover:bg-primary-60"
+        @click="logOut()">
         <p class="mr-2 text-lg">
           ログアウト
         </p>
@@ -49,8 +49,8 @@ export default {
     isLoaded: Boolean
   },
   methods: {
-    async signOut() {
-      await this.$store.dispatch("signOut")
+    async logOut() {
+      await this.$store.dispatch("logOut")
       this.$router.push("/")
     }
   },

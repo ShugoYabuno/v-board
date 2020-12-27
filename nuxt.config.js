@@ -30,10 +30,13 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    // {
-    //   src: "~/plugins/localStorage.js",
-    //   // mode: 'client'
-    // },
+    {
+      src: "~/plugins/localStorage.js",
+      mode: "client"
+    },
+    {
+      src: "~/utils/functions.js",
+    },
   ],
   /*
    ** Nuxt.js dev-modules

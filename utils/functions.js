@@ -5,8 +5,9 @@ export const customUtil = {
     async redirectCheckUser() {
       if (!process.client) return
       let vuex = JSON.parse(localStorage.getItem("vuex")) || {}
+      console.log(vuex)
       if (!vuex) return
-      if (!vuex.isSigned) this.$router.push("/")
+      if (!vuex.isAuthed) this.$router.push("/")
       return
     },
     async confirmDialog(_message) {

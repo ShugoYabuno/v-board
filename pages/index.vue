@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-gray-3 flex-ij-center wrapper">
+    class="bg-gray-30 flex-ij-center wrapper">
     <LoginForm />
   </div>
 </template>

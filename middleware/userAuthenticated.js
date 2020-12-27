@@ -1,6 +1,6 @@
-export default function ({ store, error, redirect }) {
+export default function ({ store, redirect }) {
   if (!process.client) return
-  if (!store.state.isSigned) {
+  if (!store.state.isAuthed) {
     return redirect("/")
   }
 }

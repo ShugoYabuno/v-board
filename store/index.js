@@ -1,15 +1,15 @@
 import { firestore } from "~/plugins/firebase"
-import db from "~/plugins/db"
+import firestoreService from "~/plugins/firestoreService"
 
 export const state = () => ({
-  isSigned: "",
+  isAuthed: "",
   // googleAccessToken: "",
   user_info: {}
 })
 
 export const mutations = {
-  isSigned (state, payload) {
-    state.isSigned = payload
+  isAuthed (state, payload) {
+    state.isAuthed = payload
   },
   // googleAccessToken(state, payload) {
   //   state.googleAccessToken = payload
@@ -19,11 +19,11 @@ export const mutations = {
   }
 }
 export const actions = {
-  signIn (context, value) {
-    context.commit("isSigned", true)
+  logIn (context, value) {
+    context.commit("isAuthed", true)
   },
-  signOut (context, value) {
-    context.commit("isSigned", false)
+  logOut (context, value) {
+    context.commit("isAuthed", false)
   },
   async completeGoogleAuth (context, value) {
     const { userInfo } = value
@@ -32,32 +32,31 @@ export const actions = {
     if (!resUsers) { return }
 
     if (resUsers.docs.length === 0) {
-      await db.add("users", userInfo)
+      await firestoreService.add("users", userInfo)
     }
 
-    // context.commit("googleAccessToken", value.googleAccessToken)
     context.commit("userInfo", value.userInfo)
   },
-  async dbAdd (context, value) {
+  async firestoreServiceAdd (context, value) {
     const { collectionName, data } = value
-    const res = await db.add(collectionName, data)
+    const res = await firestoreService.add(collectionName, data)
     if (!res) { return }
 
     return res
   },
-  async teamsAdd (context, value) {
+  async addTeam (context, value) {
     const { teamInfo } = value
 
     const resTeamsFind = await firestore.collection("teams").where("slug", "==", teamInfo.slug).get()
     if (!resTeamsFind) { return }
 
     if (resTeamsFind.docs.length === 0) {
-      const resTeamsAdd = await db.add("teams", teamInfo)
-      if (!resTeamsAdd) { return }
+      const resAddTeam = await firestoreService.add("teams", teamInfo)
+      if (!resAddTeam) { return }
 
       return {
         status: "success",
-        resFirestore: resTeamsAdd
+        resFirestore: resAddTeam
       }
     } else if (resTeamsFind.docs.length >= 1) {
       return {
@@ -69,11 +68,29 @@ export const actions = {
     return {
       status: "error"
     }
-  }
+  },
+  async findTeamBySlug (context, value) {
+    const { slug } = value
+
+    const teams = await firestore
+      .collection("teams")
+      .where("slug", "==", slug)
+      .get()
+      .then(function (querySnapShot) {
+        return querySnapShot.docs.map(doc => {
+          return {
+            documentId: doc.id,
+            data: doc.data()
+          }
+        })
+      })
+
+    return teams
+  },
 }
 
 export const getters = {
-  isSigned (state) {
-    return state.isSigned
+  isAuthed (state) {
+    return state.isAuthed
   }
 }

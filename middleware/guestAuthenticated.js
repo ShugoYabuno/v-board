@@ -1,5 +1,5 @@
-export default function ({ store, error, redirect }) {
-  if (store.state.isSigned) {
+export default function ({ store, redirect }) {
+  if (store.state.isAuthed) {
     return redirect("/teams")
   }
 }
