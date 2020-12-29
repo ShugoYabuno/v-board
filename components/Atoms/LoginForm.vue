@@ -5,7 +5,7 @@
     </h2>
     <button
       class="flex-ij-center p-4 h-14 w-full border-1-solid border-gray-50 rounded hover:bg-gray-30 transition"
-      @click="signIn">
+      @click="logIn">
       <img
         src="/images/icons/google.png"
         alt="Googleロゴ"
@@ -24,20 +24,19 @@ import firebase from "firebase"
 import formModal from "~/components/SlotFormModal"
 
 export default {
-  // asyncData() {
-  //   return {
-  //     isAuth: false,ik¥
-  //   }
-  // },
   components: {
     formModal
   },
+  data() {
+    return {
+      teamId: ""
+    }
+  },
   mounted() {
-    // firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
-    // // console.log(this.isAuth)
+    this.teamId = this.$route.query.teamid
   },
   methods: {
-    signIn() {
+    logIn() {
       const provider = new firebase.auth.GoogleAuthProvider()
       firebase
         .auth()
@@ -57,10 +56,27 @@ export default {
             photo_url: photoURL,
             // emailVerified,
             google_uid: uid,
+            followTeamIds: []
           }
-          await this.$store.dispatch("completeGoogleAuth", { userInfo })
+          if(this.teamId) userInfo.followTeamIds.push(this.teamId)
+
+          await this.$store.dispatch("setUserInfo", { userInfo })
           await this.$store.dispatch("logIn")
-          this.$router.push("/teams")
+
+          const teamIds = await this.$store.getters.followTeamIds
+          if (teamIds && teamIds[0]) {
+            const team = await this.$store.dispatch("firestoreFind", {
+              collectionName: "teams",
+              documentId: teamIds[0]
+            })
+            if (team) {
+              this.$router.push(`/teams/${team.slug}`)
+            } else {
+              this.$router.push("/teams/register")
+            }
+          } else {
+            this.$router.push("/teams/register")
+          }
         })
         .catch((error) => {
           console.log(error)

@@ -5,7 +5,6 @@ export const customUtil = {
     async redirectCheckUser() {
       if (!process.client) return
       let vuex = JSON.parse(localStorage.getItem("vuex")) || {}
-      console.log(vuex)
       if (!vuex) return
       if (!vuex.isAuthed) this.$router.push("/")
       return

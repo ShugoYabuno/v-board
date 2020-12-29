@@ -1,9 +1,12 @@
 <template>
-  <input
-    ref="fileVideo"
-    type="file"
-    accept="video/*"
-    @change="handleChangeVideo">
+  <div>
+    <input
+      ref="fileVideo"
+      type="file"
+      accept="video/*"
+      @change="handleChangeVideo">
+    <button>アップロード</button>
+  </div>
 </template>
 
 <script>

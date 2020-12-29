@@ -8,13 +8,7 @@ const firestoreService = (() => {
       updatedAt: Date.now()
     }
     const res = await firestore.collection(_collectionName).add(value)
-      .then(async (docRef) => {
-        const data = await docRef.get().then(doc => doc.data())
-        return {
-          documentId: docRef.id,
-          data
-        }
-      })
+      .then(async (docRef) => await docRef2data(docRef))
 
     return res
   }
@@ -26,17 +20,41 @@ const firestoreService = (() => {
     }
     const docRef = firestore.collection(_collectionName).doc(_id)
     await docRef.update(value)
-    const data = await docRef.get().then(doc => doc.data())
+    const data = await docRef2data(docRef)
+
+    return data
+  }
+
+  const doc2data = async (_doc) => {
+    const data = await _doc.data()
 
     return {
-      documentId: docRef.id,
-      data
+      documentId: _doc.id,
+      ...data
     }
+  }
+
+  const docRef2data = async (_docRef) => {
+    const data = await _docRef.get().then(doc => doc.data())
+
+    return {
+      documentId: _docRef.id,
+      ...data
+    }
+  }
+
+  const find = async (_collectionName, _id) => {
+    const docRef = firestore.collection(_collectionName).doc(_id)
+    const data = await docRef2data(docRef)
+
+    return data
   }
 
   return {
     add,
     update,
+    doc2data,
+    find
   }
 })()
 

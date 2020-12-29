@@ -48,6 +48,10 @@
   @apply w-full h-full;
 }
 
-.wrapper {
+.wrapper-sm {
   min-height: calc(100vh - 18.5rem);
+}
+
+.wrapper {
+  min-height: calc(100vh - 4rem);
 }

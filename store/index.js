@@ -4,7 +4,7 @@ import firestoreService from "~/plugins/firestoreService"
 export const state = () => ({
   isAuthed: "",
   // googleAccessToken: "",
-  user_info: {}
+  userInfo: {}
 })
 
 export const mutations = {
@@ -15,7 +15,7 @@ export const mutations = {
   //   state.googleAccessToken = payload
   // },
   userInfo (state, payload) {
-    state.user_info = payload
+    state.userInfo = payload
   }
 }
 export const actions = {
@@ -24,18 +24,27 @@ export const actions = {
   },
   logOut (context, value) {
     context.commit("isAuthed", false)
+    context.commit("userInfo", {})
   },
-  async completeGoogleAuth (context, value) {
+  async setUserInfo (context, value) {
     const { userInfo } = value
 
     const resUsers = await firestore.collection("users").where("google_uid", "==", userInfo.google_uid).get()
     if (!resUsers) { return }
 
+    let user = {}
     if (resUsers.docs.length === 0) {
-      await firestoreService.add("users", userInfo)
+      user = await firestoreService.add("users", userInfo)
+    } else {
+      user = await firestoreService.doc2data(resUsers.docs[0])
     }
 
-    context.commit("userInfo", value.userInfo)
+    context.commit("userInfo", user)
+    // context.commit("isAuthed", true)
+
+    // return {
+    //   status: "success"
+    // }
   },
   async firestoreServiceAdd (context, value) {
     const { collectionName, data } = value
@@ -87,10 +96,20 @@ export const actions = {
 
     return teams
   },
+  async firestoreFind (context, value) {
+    const { collectionName, documentId } = value
+    const resFind = await firestoreService.find(collectionName, documentId)
+
+    return resFind
+  }
 }
 
 export const getters = {
   isAuthed (state) {
     return state.isAuthed
+  },
+  followTeamIds (state) {
+    if(!state.userInfo) return
+    return state.userInfo.followTeamIds
   }
 }

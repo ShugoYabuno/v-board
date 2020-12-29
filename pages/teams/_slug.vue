@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper bg-gray-40">
+  <div class="wrapper bg-gray-10">
     <p
       v-if="teamInfo && teamInfo.data"
       class="pt-2 ml-4 mb-2">
