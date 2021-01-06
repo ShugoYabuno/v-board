@@ -4,7 +4,8 @@ import firestoreService from "~/plugins/firestoreService"
 export const state = () => ({
   isAuthed: "",
   // googleAccessToken: "",
-  userInfo: {}
+  userInfo: {},
+  unUploadedVideos: []
 })
 
 export const mutations = {
@@ -16,6 +17,9 @@ export const mutations = {
   // },
   userInfo (state, payload) {
     state.userInfo = payload
+  },
+  pushUnUploadedVideo (state, payload) {
+    state.unUploadedVideos.push(payload)
   }
 }
 export const actions = {
@@ -29,7 +33,7 @@ export const actions = {
   async setUserInfo (context, value) {
     const { userInfo } = value
 
-    const resUsers = await firestore.collection("users").where("google_uid", "==", userInfo.google_uid).get()
+    const resUsers = await firestore.collection("users").where("googleUid", "==", userInfo.googleUid).get()
     if (!resUsers) { return }
 
     let user = {}
@@ -65,7 +69,7 @@ export const actions = {
 
       return {
         status: "success",
-        resFirestore: resAddTeam
+        data: resAddTeam
       }
     } else if (resTeamsFind.docs.length >= 1) {
       return {
@@ -89,7 +93,7 @@ export const actions = {
         return querySnapShot.docs.map(doc => {
           return {
             documentId: doc.id,
-            data: doc.data()
+            ...doc.data()
           }
         })
       })
@@ -101,15 +105,35 @@ export const actions = {
     const resFind = await firestoreService.find(collectionName, documentId)
 
     return resFind
-  }
+  },
+  async update (context, value) {
+    const {
+      collectionName,
+      documentId,
+      data
+    } = value
+    const resUpdate = await firestoreService.update(collectionName, documentId, data)
+    if(!resUpdate) return
+
+    return resUpdate
+  },
+  async find (context, value) {
+    const {
+      collectionName,
+      documentId
+    } = value
+    const resUpdate = await firestoreService.find(collectionName, documentId)
+    if(!resUpdate) return
+
+    return resUpdate
+  },
 }
 
 export const getters = {
   isAuthed (state) {
     return state.isAuthed
   },
-  followTeamIds (state) {
-    if(!state.userInfo) return
-    return state.userInfo.followTeamIds
+  userInfo (state) {
+    return state.userInfo
   }
 }

@@ -18,30 +18,34 @@ export const state = () => {}
 
 export const actions = {
   async upload(context, value) {
-    const { fileVideo } = value
+    const { fileVideos } = value
 
-    const data = {
-      name: fileVideo.name,
-    }
-    const resServiceAdd = await firestoreService.add("videos", data)
+    Object.keys(fileVideos).forEach(async (_key) => {
+      const file = fileVideos[_key]
+      // console.log(file)
+      const data = {
+        name: file.name,
+      }
+      const resServiceAdd = await firestoreService.add("videos", data)
 
-    const { documentId } = resServiceAdd
+      console.log(resServiceAdd)
 
-    const storageRef = firebase.storage().ref()
-    const ref = storageRef.child(`videos/${documentId}`)
-    const successUpload = await ref.put(fileVideo).then(() => {
-      return true
+      const { documentId } = resServiceAdd
+
+      const storageRef = firebase.storage().ref()
+      const ref = storageRef.child(`videos/${documentId}`)
+      const successUpload = await ref.put(file).then(res => res.state === "success")
+      if(!successUpload) return
+
+      const videoUrl = await ref.getDownloadURL()
+      const contentType = await ref.getMetadata().then(metadata => metadata.contentType)
+      const resUpdate = await firestoreService.update("videos", documentId, {
+        storageUrl: videoUrl,
+        contentType
+      })
     })
-    if(!successUpload) return
 
-    const videoUrl = await ref.getDownloadURL()
-    const contentType = await ref.getMetadata().then(metadata => metadata.contentType)
-    const resUpdate = await firestoreService.update("videos", documentId, {
-      storageUrl: videoUrl,
-      contentType
-    })
-
-    return resUpdate
+    // return resUpload
   },
   async getByTeam (context, value) {
     const videos = await firestore
@@ -51,7 +55,7 @@ export const actions = {
         return querySnapShot.docs.map(doc => {
           return {
             documentId: doc.id,
-            data: doc.data()
+            ...doc.data()
           }
         })
       })

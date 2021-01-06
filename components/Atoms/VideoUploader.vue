@@ -1,17 +1,33 @@
 <template>
   <div>
+    <label
+      for="uploader"
+      class="flex-ij-center w-10/12 rounded-full border-1-solid p-3 shadow bg-secondary border-secondary text-white">
+      <font-awesome-icon
+        icon="file-upload"
+        class="fa-2x" />
+      <p class="ml-2">Upload</p>
+    </label>
     <input
-      ref="fileVideo"
+      id="uploader"
+      ref="fileVideos"
       type="file"
       accept="video/*"
-      @change="handleChangeVideo">
-    <button>アップロード</button>
+      class="hidden"
+      multiple
+      @change="handleChangeVideos">
   </div>
 </template>
 
 <script>
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { faFileUpload } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+
+library.add(faFileUpload)
 
 export default {
+  components: { FontAwesomeIcon },
   props: {
     getVideos: {
       type: Function,
@@ -24,23 +40,26 @@ export default {
     }
   },
   methods: {
-    getFileVideo() {
-      const files = this.$refs.fileVideo
-      const fileVideo = files.files[0]
+    getFileVideos() {
+      const files = this.$refs.fileVideos
+      const fileVideos = files.files
 
-      return fileVideo
+      return fileVideos
     },
-    async handleChangeVideo() {
-      const fileVideo = this.getFileVideo()
+    // async handleChangeVideos() {
+    //   const fileVideos = this.getFileVideos()
 
-      if (fileVideo.type.startsWith("video/")) this.videoUpload()
-    },
-    async videoUpload() {
-      const fileVideo = this.getFileVideo()
+    //   if (fileVideos.type.startsWith("videos/")) this.videosUpload()
+    // },
+    async handleChangeVideos() {
+      console.log("テスト")
+      const fileVideos = this.getFileVideos()
 
-      const resUpload = await this.$store.dispatch("video/upload", { fileVideo })
+      const resUpload = await this.$store.dispatch("video/upload", { fileVideos })
 
-      this.getVideos()
+      console.log("upload終了")
+
+      // this.getVideos()
     },
   },
 }

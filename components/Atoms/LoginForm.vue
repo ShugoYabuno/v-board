@@ -51,11 +51,11 @@ export default {
             uid,
           } = result.user
           const userInfo = {
-            display_name: displayName,
+            displayName,
             email,
-            photo_url: photoURL,
+            photoURL,
             // emailVerified,
-            google_uid: uid,
+            googleUid: uid,
             followTeamIds: []
           }
           if(this.teamId) userInfo.followTeamIds.push(this.teamId)
@@ -63,12 +63,15 @@ export default {
           await this.$store.dispatch("setUserInfo", { userInfo })
           await this.$store.dispatch("logIn")
 
-          const teamIds = await this.$store.getters.followTeamIds
+          const storeUserInfo = this.$store.getters["userInfo"]
+          const teamIds = storeUserInfo.followTeamIds
           if (teamIds && teamIds[0]) {
             const team = await this.$store.dispatch("firestoreFind", {
               collectionName: "teams",
               documentId: teamIds[0]
             })
+
+            // 既にチームをフォローしていた場合、チーム詳細にリダイレクト
             if (team) {
               this.$router.push(`/teams/${team.slug}`)
             } else {
@@ -79,6 +82,7 @@ export default {
           }
         })
         .catch((error) => {
+          console.log("エラーが発生しました")
           console.log(error)
         })
     },

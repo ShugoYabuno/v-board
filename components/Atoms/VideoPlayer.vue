@@ -36,7 +36,7 @@ export default {
         controls: true,
       },
       function onPlayerReady() {
-        console.log("onPlayerReady", this)
+        // console.log("onPlayerReady", this)
       }
     )
   },

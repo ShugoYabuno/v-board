@@ -21,5 +21,8 @@ module.exports = {
     "no-console": "off",
     "no-unused-vars": "off",
     "vue/html-closing-bracket-newline": [2, { multiline: "never" }],
+    // "vue/no-unused-components": [1, {
+    //   "ignoreWhenBindingPresent": true
+    // }]
   },
 }

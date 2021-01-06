@@ -13,12 +13,12 @@ const firestoreService = (() => {
     return res
   }
 
-  const update = async (_collectionName, _id, _data) => {
+  const update = async (_collectionName, _documentId, _data) => {
     const value = {
       ..._data,
       updatedAt: Date.now()
     }
-    const docRef = firestore.collection(_collectionName).doc(_id)
+    const docRef = firestore.collection(_collectionName).doc(_documentId)
     await docRef.update(value)
     const data = await docRef2data(docRef)
 

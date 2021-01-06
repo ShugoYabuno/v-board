@@ -2,7 +2,7 @@
   <div class="w-screen min-h-screen">
     <BaseHeader />
     <div class="w-full pt-14 flex">
-      <div class="w-48 bg-gray-30" />
+      <UserSideBar />
       <div class="flex-grow">
         <nuxt />
         <!-- <Footer /> -->
@@ -13,11 +13,13 @@
 
 <script>
 import BaseHeader from "~/components/layouts/headers/BaseHeader"
+import UserSideBar from "~/components/layouts/UserSideBar"
 // import Footer from "~/components/layouts/footers/Footer"
 
 export default {
   components: {
     BaseHeader,
+    UserSideBar,
     // Footer,
   },
   middleware: "userAuthenticated",

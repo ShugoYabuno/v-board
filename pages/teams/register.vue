@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-ij-center wrapper bg-gray-30">
+  <div class="flex-ij-center wrapper-sm p-20 bg-gray-30">
     <formModal>
       <h2 class="mb-8 font-semibold text-center text-xl text-gray-90">
         チームの登録
@@ -53,7 +53,7 @@ export default {
   components: {
     formModal
   },
-  layout: "user",
+  // layout: "user",
   data() {
     return {
       error: {
@@ -70,14 +70,31 @@ export default {
 
       const { teamInfo } = this
 
-      const resStore = await this.$store.dispatch("addTeam", { teamInfo })
-      if(!resStore) return
+      const resAddTeam = await this.$store.dispatch("addTeam", { teamInfo })
+      if(!resAddTeam) return
 
-      if (resStore.status === "success") {
-        this.$router.push(`/teams/${resStore.resFirestore.data.slug}`)
-      } else if(resStore.status === "error" && resStore.message === "Slug is exist") {
-        this.error.slug = "そのチームIDは既に存在します。別のIDを試してください。"
+      if(resAddTeam.status === "error" && resAddTeam.message === "Slug is exist") {
+          this.error.slug = "そのチームIDは既に存在します。別のIDを試してください。"
+          return
+      } else if (resAddTeam.status !== "success") return
+
+      const storeUserInfo = await this.$store.getters["userInfo"]
+
+      let followTeamIds = []
+      if (storeUserInfo.followTeamIds) followTeamIds = [...storeUserInfo.followTeamIds]
+
+      followTeamIds.push(resAddTeam.data.documentId)
+
+      const updateData = {
+        collectionName: "users",
+        documentId: storeUserInfo.documentId,
+        data: {
+          followTeamIds
+        }
       }
+      console.log(updateData)
+      // const resUpdateUser = await this.$store.dispatch("update", { teamInfo })
+      // this.$router.push(`/teams/${resAddTeam.resFirestore.slug}`)
     },
     isError() {
       if(!/^[a-z0-9_.-]+$/.test(this.teamInfo.slug)) {
