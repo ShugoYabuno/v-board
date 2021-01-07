@@ -18,38 +18,52 @@ export const state = () => {}
 
 export const actions = {
   async upload(context, value) {
-    const { fileVideos } = value
+    const { fileVideos, publicTeamId } = value
 
-    Object.keys(fileVideos).forEach(async (_key) => {
-      const file = fileVideos[_key]
-      // console.log(file)
-      const data = {
-        name: file.name,
-      }
-      const resServiceAdd = await firestoreService.add("videos", data)
+    const uploadStatus = await new Promise((resolve, reject) => {
+      let counter = 0
+      Object.keys(fileVideos).forEach(async (_key, index) => {
+        const file = fileVideos[_key]
+        // console.log(file)
+        const data = {
+          name: file.name,
+          publicTeamId
+        }
+        const resServiceAdd = await firestoreService.add("videos", data)
 
-      console.log(resServiceAdd)
+        console.log(resServiceAdd)
 
-      const { documentId } = resServiceAdd
+        const { documentId } = resServiceAdd
 
-      const storageRef = firebase.storage().ref()
-      const ref = storageRef.child(`videos/${documentId}`)
-      const successUpload = await ref.put(file).then(res => res.state === "success")
-      if(!successUpload) return
+        const storageRef = firebase.storage().ref()
+        const ref = storageRef.child(`videos/${documentId}`)
+        const successUpload = await ref.put(file).then(res => res.state === "success")
+        if(!successUpload) return
 
-      const videoUrl = await ref.getDownloadURL()
-      const contentType = await ref.getMetadata().then(metadata => metadata.contentType)
-      const resUpdate = await firestoreService.update("videos", documentId, {
-        storageUrl: videoUrl,
-        contentType
+        const videoUrl = await ref.getDownloadURL()
+        const contentType = await ref.getMetadata().then(metadata => metadata.contentType)
+        const resUpdate = await firestoreService.update("videos", documentId, {
+          storageUrl: videoUrl,
+          contentType
+        })
+
+        counter += 1
+
+        if(counter === fileVideos.length) resolve("success")
       })
     })
 
-    // return resUpload
+    console.log(uploadStatus)
+
+    return {
+      status: "completed"
+    }
   },
   async getByTeam (context, value) {
+    const { teamId } = value
     const videos = await firestore
       .collection("videos")
+      .where("publicTeamId", "==", teamId)
       .get()
       .then(function (querySnapShot) {
         return querySnapShot.docs.map(doc => {

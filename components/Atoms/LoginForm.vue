@@ -73,7 +73,11 @@ export default {
 
             // 既にチームをフォローしていた場合、チーム詳細にリダイレクト
             if (team) {
+              await this.$store.dispatch("setTeamInfo", {
+                teamInfo: team
+              })
               this.$router.push(`/teams/${team.slug}`)
+            // チームが存在しない場合はチーム登録から
             } else {
               this.$router.push("/teams/register")
             }

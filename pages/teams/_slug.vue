@@ -40,6 +40,16 @@ export default {
       isLoaded: false,
     }
   },
+  computed: {
+    sentryVideoUpload: function() {
+      return this.$store.getters["sentryVideoUpload"]
+    }
+  },
+  watch: {
+    sentryVideoUpload() {
+      this.getVideos()
+    }
+  },
   async mounted() {
     const resFindTeam = await this.$store.dispatch("findTeamBySlug", {
       slug: this.$route.params.slug
@@ -65,11 +75,14 @@ export default {
     async getVideos() {
       this.isLoaded = false
 
-      const videos = await this.$store.dispatch("video/getByTeam")
+      const teamInfo = await this.$store.getters["teamInfo"]
+      const videos = await this.$store.dispatch("video/getByTeam", {
+        teamId: teamInfo.documentId
+      })
 
       this.videos = videos
       this.isLoaded = true
     }
-  },
+  }
 }
 </script>

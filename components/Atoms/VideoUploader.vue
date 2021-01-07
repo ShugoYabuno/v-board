@@ -52,14 +52,15 @@ export default {
     //   if (fileVideos.type.startsWith("videos/")) this.videosUpload()
     // },
     async handleChangeVideos() {
-      console.log("テスト")
       const fileVideos = this.getFileVideos()
+      const team = this.$store.getters["teamInfo"]
 
-      const resUpload = await this.$store.dispatch("video/upload", { fileVideos })
+      const resUpload = await this.$store.dispatch("video/upload", {
+        fileVideos,
+        publicTeamId: team.documentId
+      })
 
-      console.log("upload終了")
-
-      // this.getVideos()
+      this.$store.dispatch("videoUploaded")
     },
   },
 }

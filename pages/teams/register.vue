@@ -92,9 +92,11 @@ export default {
           followTeamIds
         }
       }
-      console.log(updateData)
-      // const resUpdateUser = await this.$store.dispatch("update", { teamInfo })
-      // this.$router.push(`/teams/${resAddTeam.resFirestore.slug}`)
+
+      console.log(resAddTeam)
+
+      const resUpdateUser = await this.$store.dispatch("update", updateData)
+      this.$router.push(`/teams/${resAddTeam.data.slug}`)
     },
     isError() {
       if(!/^[a-z0-9_.-]+$/.test(this.teamInfo.slug)) {

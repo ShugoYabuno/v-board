@@ -3,9 +3,10 @@ import firestoreService from "~/plugins/firestoreService"
 
 export const state = () => ({
   isAuthed: "",
+  sentryVideoUpload: false,
   // googleAccessToken: "",
   userInfo: {},
-  unUploadedVideos: []
+  teamInfo: {},
 })
 
 export const mutations = {
@@ -18,8 +19,12 @@ export const mutations = {
   userInfo (state, payload) {
     state.userInfo = payload
   },
-  pushUnUploadedVideo (state, payload) {
-    state.unUploadedVideos.push(payload)
+  teamInfo (state, payload) {
+    state.teamInfo = payload
+  },
+  switchVideoUpload (state, payload) {
+    console.log(state)
+    state.sentryVideoUpload = !state.sentryVideoUpload
   }
 }
 export const actions = {
@@ -29,6 +34,9 @@ export const actions = {
   logOut (context, value) {
     context.commit("isAuthed", false)
     context.commit("userInfo", {})
+  },
+  async videoUploaded(context, value) {
+    context.commit("switchVideoUpload")
   },
   async setUserInfo (context, value) {
     const { userInfo } = value
@@ -127,6 +135,10 @@ export const actions = {
 
     return resUpdate
   },
+  async setTeamInfo (context, value) {
+    const { teamInfo } = value
+    context.commit("teamInfo", teamInfo)
+  }
 }
 
 export const getters = {
@@ -135,5 +147,11 @@ export const getters = {
   },
   userInfo (state) {
     return state.userInfo
+  },
+  teamInfo (state) {
+    return state.teamInfo
+  },
+  sentryVideoUpload (state) {
+    return state.sentryVideoUpload
   }
 }
