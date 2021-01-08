@@ -124,10 +124,10 @@ module.exports = {
   //     },
   //   },
   // },
-  serverMiddleware: [
-    // API middleware
-    "~/api/index.js",
-  ],
+  // serverMiddleware: [
+  //   // API middleware
+  //   "~/api/index.js",
+  // ],
   devServer: {
     disableHostCheck: true,
   },
