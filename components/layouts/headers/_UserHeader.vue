@@ -10,6 +10,13 @@
     <!-- <font-awesome-icon icon="bars" class="ml-auto fa-lg text-secondary-20" /> -->
     <div
       class="flex-i-center ml-auto h-full">
+      <div class="h-9 w-9">
+        <div class="w-full h-full rounded-full overflow-hidden object-cover">
+          <img
+            :src="`${profileIcon}`"
+            alt="アバターの画像">
+        </div>
+      </div>
       <button
         class="flex-i-center h-5/6 px-3 rounded transition hover:bg-primary-60"
         @click="logOut()">
@@ -34,19 +41,17 @@ library.add(faSignOutAlt)
 
 export default {
   components: { FontAwesomeIcon },
-  // asyncData() {
-  //   return {
-  //     isAuth: false,
-  //   }
-  // },
-  // data() {
-  //   return {
-  //     collapseOnScroll: true,
-  //     selectTab: 0,
-  //   }
-  // },
   props: {
     isLoaded: Boolean
+  },
+  data() {
+    return {
+      profileIcon: ""
+    }
+  },
+  mounted() {
+    const userInfo = this.$store.getters["userInfo"]
+    this.profileIcon = userInfo.photoURL
   },
   methods: {
     async logOut() {
@@ -54,9 +59,5 @@ export default {
       this.$router.push("/")
     }
   },
-  // mounted() {
-  //   firebase.auth().onAuthStateChanged((user) => (this.isAuth = !!user))
-  //   console.log(this.isAuth)
-  // },
 }
 </script>
