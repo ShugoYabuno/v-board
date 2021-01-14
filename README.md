@@ -17,6 +17,11 @@ $ npm run start
 
 # generate static project
 $ npm run generate
+
+# heroku push
+$ git add .
+$ git commit -am "make it better"
+$ git push heroku main
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
