@@ -54,7 +54,6 @@ export default {
     const resFindTeam = await this.$store.dispatch("findTeamBySlug", {
       slug: this.$route.params.slug
     })
-    console.log(resFindTeam)
     if(!resFindTeam) return
 
     this.teamInfo = resFindTeam[0]
@@ -68,6 +67,7 @@ export default {
           {
             src: _video.storageUrl,
             type: _video.contentType,
+            controls: true,
           },
         ]
       }

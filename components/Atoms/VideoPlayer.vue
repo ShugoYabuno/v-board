@@ -26,14 +26,13 @@ export default {
     }
   },
   mounted() {
-    console.log(this.options)
     this.player = videojs(
       this.$refs.videoPlayer,
       {
-        ...this.options,
         aspectRatio: "16:9",
         // autoplay: true,
-        controls: true,
+        // controls: true,
+        ...this.options,
       },
       function onPlayerReady() {
         // console.log("onPlayerReady", this)
