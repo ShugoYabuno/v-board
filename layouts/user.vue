@@ -1,6 +1,6 @@
 <template>
   <div class="w-screen min-h-screen">
-    <BaseHeader />
+    <UserHeader />
     <div class="w-full pt-14 flex">
       <UserSideBar />
       <div class="flex-grow">
@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import BaseHeader from "~/components/layouts/headers/BaseHeader"
+import UserHeader from "~/components/layouts/headers/UserHeader"
 import UserSideBar from "~/components/layouts/UserSideBar"
 // import Footer from "~/components/layouts/footers/Footer"
 
 export default {
   components: {
-    BaseHeader,
+    UserHeader,
     UserSideBar,
     // Footer,
   },

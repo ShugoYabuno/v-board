@@ -1,6 +1,6 @@
 <template>
   <div class="w-screen min-h-screen">
-    <BaseHeader />
+    <GuestHeader />
     <div class="w-full pt-14">
       <nuxt />
       <Footer />
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import BaseHeader from "~/components/layouts/headers/BaseHeader"
+import GuestHeader from "~/components/layouts/headers/GuestHeader"
 import Footer from "~/components/layouts/footers/Footer"
 
 export default {
   components: {
-    BaseHeader,
+    GuestHeader,
     Footer,
   },
 }
