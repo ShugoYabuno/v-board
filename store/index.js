@@ -23,7 +23,6 @@ export const mutations = {
     state.teamInfo = payload
   },
   switchVideoUpload (state, payload) {
-    console.log(state)
     state.sentryVideoUpload = !state.sentryVideoUpload
   }
 }
