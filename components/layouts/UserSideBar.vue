@@ -1,5 +1,5 @@
 <template>
-  <div class="w-48 bg-primary-10 p-4">
+  <div class="w-48 bg-gray-20 p-4">
     <VideoUploader />
   </div>
 </template>

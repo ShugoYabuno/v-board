@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 w-full h-14 bg-primary shadow-md">
+  <header class="fixed top-0 w-full h-14 z-10 bg-gray-10 shadow-md">
     <UserHeader
       v-if="$store.getters.isAuthed"
       :is-loaded="isLoaded" />

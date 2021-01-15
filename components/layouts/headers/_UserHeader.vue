@@ -1,7 +1,7 @@
 <template>
   <nav
     v-if="isLoaded"
-    class="flex-i-center h-full w-full mx-auto text-secondary-20">
+    class="flex-i-center h-full w-full mx-auto text-primary">
     <nuxt-link
       to="/"
       class="flex-i-center font-semibold text-2xl h-5/6 px-3 rounded transition hover:bg-primary-60">
