@@ -33,6 +33,7 @@ export const actions = {
   logOut (context, value) {
     context.commit("isAuthed", false)
     context.commit("userInfo", {})
+    context.commit("teamInfo", {})
   },
   async videoUploaded(context, value) {
     context.commit("switchVideoUpload")
@@ -162,7 +163,7 @@ export const actions = {
   async setTeamInfo (context, value) {
     const { teamInfo } = value
     context.commit("teamInfo", teamInfo)
-  }
+  },
 }
 
 export const getters = {

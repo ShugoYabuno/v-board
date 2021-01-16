@@ -3,8 +3,8 @@
     <div class="flex-i-center h-14 px-2 hover:bg-primary-10">
       <div class="w-9 h-9 rounded-full overflow-hidden">
         <img
-          v-if="profileIcon"
-          :src="`${profileIcon}`"
+          v-if="teamInfo.iconImageUrl"
+          :src="`${teamInfo.iconImageUrl}`"
           class="object-cover"
           alt="ユーザーアイコン">
         <div class="h-full w-full flex-ij-center bg-gray-60">
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import VideoUploader from "~/components/Atoms/VideoUploader"
+import VideoUploader from "~/components/parts/VideoUploader"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faUsers, faCog } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"

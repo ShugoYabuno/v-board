@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import LoginForm from "~/components/Atoms/LoginForm"
+import LoginForm from "~/components/parts/LoginForm"
 
 export default {
   // data() {

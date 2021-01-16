@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import GuestHeader from "~/components/layouts/headers/GuestHeader"
-import Footer from "~/components/layouts/footers/Footer"
+import GuestHeader from "~/components/modules/layouts/headers/GuestHeader"
+import Footer from "~/components/modules/layouts/footers/Footer"
 
 export default {
   components: {

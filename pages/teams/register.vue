@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import formModal from "~/components/SlotFormModal"
-import TeamEdit from "~/components/Atoms/TeamEdit"
+import formModal from "~/components/modules/SlotFormModal"
+import TeamEdit from "~/components/parts/TeamEdit"
 
 export default {
   components: {

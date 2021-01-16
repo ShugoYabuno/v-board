@@ -1,6 +1,32 @@
 <template>
   <div>
-    <div>
+    <label
+      for="teamIconUploader"
+      class="block text-center text-sm mx-auto text-gray-70">
+      チームアイコン</label>
+    <div class="flex-ij-center w-24 h-24 mx-auto mt-2 overflow-hidden rounded-full border-1-solid border-gray-40 bg-gray-10">
+      <img
+        v-if="teamInfo.iconImageUrl"
+        id="icon"
+        :src="`${teamInfo.iconImageUrl}`"
+        class="object-cover"
+        alt="チームアイコン">
+      <label
+        for="teamIconUploader"
+        class="absolute p-3 rounded-full hover:bg-gray-100 hover:bg-opacity-20">
+        <FontAwesomeIcon
+          icon="camera"
+          class="fa-lg text-primary text-opacity-90" />
+      </label>
+      <input
+        id="teamIconUploader"
+        ref="teamIcon"
+        type="file"
+        accept="image/*"
+        class="hidden"
+        @change="handleChangeImage">
+    </div>
+    <div class="mt-4">
       <label
         v-if="isCreate"
         for="slug"
@@ -53,8 +79,8 @@
       </label>
     </div>
     <button
-      type="
-        button"
+      type="button"
+      :disabled="onUpload"
       class="block mx-auto mt-4 px-7 py-3 text-xl rounded-xl bg-blue text-gray-10"
       @click="onSubmit()">
       登録
@@ -63,12 +89,22 @@
 </template>
 
 <script>
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { faCamera } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+
+library.add(faCamera)
+
 const teamsModel = {
+  iconImageUrl: "",
   slug: "",
   name: ""
 }
 
 export default {
+  components: {
+    FontAwesomeIcon
+  },
   layout: "user",
   props: {
     isCreate: {
@@ -83,14 +119,26 @@ export default {
       },
       teamInfo: {
         ...teamsModel
-      }
+      },
+      onUpload: false
     }
   },
   async mounted() {
     this.teamInfo = this.$store.getters["teamInfo"]
-    console.log(this.teamInfo)
   },
   methods: {
+    async handleChangeImage() {
+      this.onUpload = true
+      const files = this.$refs.teamIcon
+      const fileImage = files.files[0]
+
+      const resUpload = await this.$store.dispatch("image/upload", {
+        fileImage,
+      })
+
+      this.teamInfo.iconImageUrl = resUpload
+      this.onUpload = false
+    },
     async onSubmit() {
       if(this.isError()) return
 
@@ -120,6 +168,7 @@ export default {
           return
       } else if (resEditTeam.status !== "success") return
 
+      this.$router.push(`/teams/${resEditTeam.data.slug}`)
     },
     isError() {
       if(!/^[a-z0-9_.-]+$/.test(this.teamInfo.slug)) {

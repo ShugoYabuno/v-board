@@ -1,9 +1,9 @@
 <template>
-  <header class="fixed top-0 w-full h-14 px-4 z-10 bg-gray-10 shadow-md">
+  <header class="fixed top-0 w-full h-14 px-4 z-10 bg-gray-30 shadow-md">
     <nav
       class="flex-i-center h-full w-full mx-auto text-primary">
       <nuxt-link
-        to="/"
+        :to="`/teams/${teamSlug}`"
         class="flex-i-center font-semibold text-2xl h-5/6 px-3 rounded transition hover:bg-primary-10">
         Vboard
       </nuxt-link>
@@ -43,13 +43,16 @@ export default {
   data() {
     return {
       profileIcon: "",
+      teamSlug: "/"
       // isLoaded: false
     }
   },
   mounted() {
     const userInfo = this.$store.getters["userInfo"]
     this.profileIcon = userInfo.photoURL
-    // this.isLoaded = true
+
+    const teamInfo = this.$store.getters["teamInfo"]
+    if (teamInfo.slug) this.teamSlug = teamInfo.slug
   },
   methods: {
     async logOut() {

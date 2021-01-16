@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import UserHeader from "~/components/layouts/headers/UserHeader"
-import UserSideBar from "~/components/layouts/UserSideBar"
-// import Footer from "~/components/layouts/footers/Footer"
+import UserHeader from "~/components/modules/layouts/headers/UserHeader"
+import UserSideBar from "~/components/modules/layouts/UserSideBar"
+// import Footer from "~/components/modules/layouts/footers/Footer"
 
 export default {
   components: {
@@ -25,6 +25,15 @@ export default {
   middleware: "userAuthenticated",
   async mounted() {
     await this.redirectCheckUser()
+
+    if (this.$route.params.slug) {
+      const findTeams = await this.$store.dispatch("findTeamBySlug", {
+        slug: this.$route.params.slug
+      })
+      await this.$store.dispatch("setTeamInfo", {
+        teamInfo: findTeams[0]
+      })
+    }
   }
 }
 </script>

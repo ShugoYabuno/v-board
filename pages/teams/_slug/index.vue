@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-10">
+  <div class="bg-gray-10 h-full">
     <div class="ml-4" />
     <div
       v-if="isLoaded && videos.length >= 1"
@@ -14,13 +14,15 @@
       </div>
     </div>
     <div v-if="isLoaded && videos.length === 0">
-      <p>動画がアップロードされていません。</p>
+      <p class="ml-4 pt-4">
+        動画がアップロードされていません。
+      </p>
     </div>
   </div>
 </template>
 
 <script>
-import VideoPlayer from "~/components/Atoms/VideoPlayer"
+import VideoPlayer from "~/components/parts/VideoPlayer"
 
 export default {
   components: {

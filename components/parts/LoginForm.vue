@@ -21,7 +21,7 @@
 
 <script>
 import firebase from "firebase"
-import formModal from "~/components/SlotFormModal"
+import formModal from "~/components/modules/SlotFormModal"
 
 export default {
   components: {
