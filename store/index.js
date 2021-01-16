@@ -89,6 +89,31 @@ export const actions = {
       status: "error"
     }
   },
+  async updateTeam (context, value) {
+    const { documentId, teamInfo } = value
+
+    const resTeamsFind = await firestore.collection("teams").where("slug", "==", teamInfo.slug).get()
+    if (!resTeamsFind) { return }
+
+    if (resTeamsFind.docs.length === 0 || resTeamsFind.docs[0].id === documentId) {
+      const resUpdateTeam = await firestoreService.update("teams", documentId, teamInfo)
+      if (!resUpdateTeam) { return }
+
+      return {
+        status: "success",
+        data: resUpdateTeam
+      }
+    } else if (resTeamsFind.docs.length >= 1) {
+      return {
+        status: "error",
+        message: "Slug is exist"
+      }
+    }
+
+    return {
+      status: "error"
+    }
+  },
   async findTeamBySlug (context, value) {
     const { slug } = value
 

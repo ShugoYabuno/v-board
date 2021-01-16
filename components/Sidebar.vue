@@ -1,14 +1,15 @@
 <template>
   <div class="sidebar">
-    <nuxt-link class="item" :to="`/team/${teamId}`">
+    <nuxt-link
+      class="item"
+      :to="`/team/${teamId}`">
       <p>{{ team.name }}</p>
     </nuxt-link>
     <nuxt-link
-      class="item"
       v-for="(_project, _index) in projects"
       :key="_index"
-      :to="`/team/${teamId}/${_project._id}`"
-    >
+      class="item"
+      :to="`/team/${teamId}/${_project._id}`">
       <p>{{ _project.name }}</p>
     </nuxt-link>
   </div>

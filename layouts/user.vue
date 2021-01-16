@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen min-h-screen">
     <UserHeader />
-    <div class="w-full pt-14 flex">
+    <div class="min-h-screen w-full pt-14 flex">
       <UserSideBar />
       <div class="flex-grow">
         <nuxt />

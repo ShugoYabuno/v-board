@@ -1,10 +1,5 @@
 <template>
-  <div class="wrapper bg-gray-10">
-    <p
-      v-if="teamInfo"
-      class="pt-2 ml-4 mb-2">
-      チーム名: {{ teamInfo.name }}
-    </p>
+  <div class="bg-gray-10">
     <div class="ml-4" />
     <div
       v-if="isLoaded && videos.length >= 1"
@@ -51,13 +46,6 @@ export default {
     }
   },
   async mounted() {
-    const resFindTeam = await this.$store.dispatch("findTeamBySlug", {
-      slug: this.$route.params.slug
-    })
-    if(!resFindTeam) return
-
-    this.teamInfo = resFindTeam[0]
-
     await this.getVideos()
   },
   methods: {
