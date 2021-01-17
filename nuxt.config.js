@@ -3,7 +3,7 @@ module.exports = {
   /*
    ** Headers of the page
    */
-  target: "static",
+  // target: "static",
   head: {
     title: process.env.npm_package_name || "",
     meta: [
