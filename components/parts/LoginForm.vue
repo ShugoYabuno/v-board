@@ -7,7 +7,7 @@
       class="flex-ij-center p-4 h-14 w-full border-1-solid border-gray-50 rounded hover:bg-gray-30 transition"
       @click="logIn">
       <img
-        src="/images/icons/google.png"
+        src="~/assets/images/google.png"
         alt="Googleロゴ"
         class="h-5 w-5 mr-4">
       <p class="text-gray-60 text-center">
