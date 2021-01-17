@@ -9,6 +9,7 @@
       }
     }
   ],
+  "regions": ["hnd1"],
   "routes": [
     { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=31557600" } },
     {
