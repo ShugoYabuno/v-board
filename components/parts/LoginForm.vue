@@ -38,6 +38,7 @@ export default {
   methods: {
     logIn() {
       const provider = new firebase.auth.GoogleAuthProvider()
+
       firebase
         .auth()
         .signInWithPopup(provider)
@@ -86,7 +87,6 @@ export default {
           }
         })
         .catch((error) => {
-          console.log("エラーが発生しました")
           console.log(error)
         })
     },

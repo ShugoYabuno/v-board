@@ -25,15 +25,6 @@ export default {
   middleware: "userAuthenticated",
   async mounted() {
     await this.redirectCheckUser()
-
-    if (this.$route.params.slug) {
-      const findTeams = await this.$store.dispatch("findTeamBySlug", {
-        slug: this.$route.params.slug
-      })
-      await this.$store.dispatch("setTeamInfo", {
-        teamInfo: findTeams[0]
-      })
-    }
   }
 }
 </script>

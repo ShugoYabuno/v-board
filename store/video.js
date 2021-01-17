@@ -111,6 +111,7 @@ export const actions = {
   },
   async getByTeam (context, value) {
     const { teamId } = value
+
     const videos = await firestore
       .collection("videos")
       .where("publicTeamId", "==", teamId)
