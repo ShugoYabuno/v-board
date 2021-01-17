@@ -37,6 +37,11 @@ export default {
       isLoaded: false,
     }
   },
+  async fetch({store, params}) {
+    await store.dispatch("setTeamInfoBySlug", {
+      teamSlug: params.teamSlug
+    })
+  },
   computed: {
     sentryVideoUpload: function() {
       return this.$store.getters["sentryVideoUpload"]
@@ -48,6 +53,9 @@ export default {
     }
   },
   async mounted() {
+    // await this.$store.dispatch("setTeamInfoBySlug", {
+    //   teamSlug: this.$route.params.teamSlug
+    // })
     await this.getVideos()
   },
   methods: {
