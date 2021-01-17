@@ -88,15 +88,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, { isServer }) {
-      if ( isServer ) {
-        config.externals = {
-          "@firebase/app": "commonjs @firebase/app",
-          "@firebase/firestore": "commonjs @firebase/firestore",
-          //etc...
-        }
-      }
-    },
+    extend(config) {},
     postcss: {
       // キーとしてプラグイン名を、値として引数を追加します
       // プラグインは前もって npm か yarn で dependencies としてインストールしておきます
