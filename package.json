@@ -16,12 +16,9 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^2.0.2",
-    "@nuxtjs/axios": "^5.12.4",
-    "@nuxtjs/dotenv": "^1.4.0",
+    "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/tailwindcss": "^3.4.2",
-    "cookie-parser": "^1.4.5",
-    "cross-env": "^5.2.0",
     "firebase": "^8.2.1",
     "nuxt": "^2.14.12",
     "postcss-hexrgba": "^2.0.1",
@@ -33,6 +30,7 @@
     "vuex-persistedstate": "^4.0.0-beta.1"
   },
   "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/eslint-module": "^3.0.2",
     "autoprefixer": "^9.8.6",
     "babel-eslint": "^10.0.1",
