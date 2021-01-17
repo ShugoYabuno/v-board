@@ -143,15 +143,27 @@ export default {
       if(this.isError()) return
 
       const { teamInfo } = this
-      const { documentId } = teamInfo
 
       let resEditTeam = {}
       if (this.isCreate) {
         const resAddTeam = await this.$store.dispatch("addTeam", { teamInfo })
         if(!resAddTeam) return
 
+        const userInfo = this.$store.getters["userInfo"]
+        const followTeamIds = [...userInfo.followTeamIds, resAddTeam.data.documentId]
+
+        const payload = {
+          collectionName: "users",
+          documentId: userInfo.documentId,
+          data: {
+            followTeamIds
+          }
+        }
+        await this.$store.dispatch("fsUpdate", payload)
+
         resEditTeam = resAddTeam
       } else {
+        const { documentId } = teamInfo
         delete teamInfo.documentId
 
         const resUpdateTeam = await this.$store.dispatch("updateTeam", {

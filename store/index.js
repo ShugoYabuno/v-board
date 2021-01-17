@@ -133,13 +133,48 @@ export const actions = {
 
     return teams
   },
+  async setTeamInfoBySlug (context, value) {
+    const { teamSlug } = value
+
+    const teams = await firestore
+      .collection("teams")
+      .where("slug", "==", teamSlug)
+      .get()
+      .then(function (querySnapShot) {
+        return querySnapShot.docs.map(doc => {
+          return {
+            documentId: doc.id,
+            ...doc.data()
+          }
+        })
+      })
+
+    console.log(teams)
+
+    const {
+      documentId,
+      iconImageUrl,
+      name,
+      slug
+    } = teams[0]
+
+
+    context.commit("teamInfo", {
+      documentId,
+      iconImageUrl,
+      name,
+      slug
+    })
+
+    return
+  },
   async firestoreFind (context, value) {
     const { collectionName, documentId } = value
     const resFind = await firestoreService.find(collectionName, documentId)
 
     return resFind
   },
-  async update (context, value) {
+  async fsUpdate (context, value) {
     const {
       collectionName,
       documentId,
