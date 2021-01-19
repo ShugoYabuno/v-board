@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-10 h-full">
+  <div class="bg-gray-10 w-full h-screen">
     <div class="ml-4" />
     <div
       v-if="isLoaded && videos.length >= 1"

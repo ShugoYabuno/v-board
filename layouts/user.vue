@@ -1,11 +1,12 @@
 <template>
-  <div class="w-screen min-h-screen">
+  <div class="w-screen h-screen pt-12 overflow-y-scroll">
     <UserHeader />
-    <div class="min-h-screen w-full pt-14 flex">
-      <UserSideBar />
-      <div class="flex-grow">
+    <SpSideBar class="block md:hidden" />
+    <div class="flex w-full h-full">
+      <!-- pc用 -->
+      <PcSideBar class="hidden md:block" />
+      <div class="flex-grow h-full overflow-scroll">
         <nuxt />
-        <!-- <Footer /> -->
       </div>
     </div>
   </div>
@@ -13,13 +14,15 @@
 
 <script>
 import UserHeader from "~/components/modules/layouts/headers/UserHeader"
-import UserSideBar from "~/components/modules/layouts/UserSideBar"
+import SpSideBar from "~/components/modules/layouts/sidebar/SpSideBar"
+import PcSideBar from "~/components/modules/layouts/sidebar/PcSideBar"
 // import Footer from "~/components/modules/layouts/footers/Footer"
 
 export default {
   components: {
     UserHeader,
-    UserSideBar,
+    SpSideBar,
+    PcSideBar,
     // Footer,
   },
   middleware: "userAuthenticated",

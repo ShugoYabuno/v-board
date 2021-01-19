@@ -12,7 +12,7 @@
       id="uploader"
       ref="fileVideos"
       type="file"
-      accept="video/*"
+      accept="video/mp4"
       class="hidden"
       multiple
       @change="handleChangeVideos">

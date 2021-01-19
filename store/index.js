@@ -3,6 +3,7 @@ import firestoreService from "~/plugins/firestoreService"
 
 export const state = () => ({
   isAuthed: "",
+  isVisibleSidebar: false,
   sentryVideoUpload: false,
   // googleAccessToken: "",
   userInfo: {},
@@ -24,6 +25,9 @@ export const mutations = {
   },
   switchVideoUpload (state, payload) {
     state.sentryVideoUpload = !state.sentryVideoUpload
+  },
+  switchVisibleSidebar (state, payload) {
+    state.isVisibleSidebar = !state.isVisibleSidebar
   }
 }
 export const actions = {
@@ -149,8 +153,6 @@ export const actions = {
         })
       })
 
-    console.log(teams)
-
     const {
       documentId,
       iconImageUrl,
@@ -199,6 +201,9 @@ export const actions = {
     const { teamInfo } = value
     context.commit("teamInfo", teamInfo)
   },
+  async switchVisibleSidebar (context, value) {
+    context.commit("switchVisibleSidebar")
+  }
 }
 
 export const getters = {
@@ -213,5 +218,8 @@ export const getters = {
   },
   sentryVideoUpload (state) {
     return state.sentryVideoUpload
+  },
+  isVisibleSidebar (state) {
+    return state.isVisibleSidebar
   }
 }

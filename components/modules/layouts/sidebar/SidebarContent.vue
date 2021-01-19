@@ -1,9 +1,9 @@
 <template>
-  <div class="w-60 bg-gray-20">
+  <div>
     <div class="flex-i-center h-14 px-2 hover:bg-primary-10">
       <div class="w-9 h-9 rounded-full overflow-hidden">
         <img
-          v-if="teamInfo.iconImageUrl"
+          v-if="teamInfo && teamInfo.iconImageUrl"
           :src="`${teamInfo.iconImageUrl}`"
           class="object-cover"
           alt="ユーザーアイコン">
@@ -45,16 +45,18 @@ library.add(faCog)
 export default {
   components: {
     VideoUploader,
-    FontAwesomeIcon
+    FontAwesomeIcon,
   },
   data() {
     return {
       teamInfo: {},
-      profileIcon: ""
+      profileIcon: "",
+      teamSlug: "/"
     }
   },
   async mounted() {
     this.teamInfo = this.$store.getters["teamInfo"]
+    if (this.teamInfo.slug) this.teamSlug = `/${this.teamInfo.slug}`
   }
 }
 </script>

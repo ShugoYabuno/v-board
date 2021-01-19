@@ -24,6 +24,9 @@ export const customUtil = {
       })
       return isProceed
     },
+    switchVisibleSidebar() {
+      this.$store.dispatch("switchVisibleSidebar")
+    }
   }
 }
 
