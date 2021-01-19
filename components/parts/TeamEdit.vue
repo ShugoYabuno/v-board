@@ -4,27 +4,12 @@
       for="teamIconUploader"
       class="block text-center text-sm mx-auto text-gray-70">
       チームアイコン</label>
-    <div class="flex-ij-center w-24 h-24 mx-auto mt-2 overflow-hidden rounded-full border-1-solid border-gray-40 bg-gray-10">
-      <img
+    <div class="w-24 h-24 mx-auto mt-2">
+      <IconUploader
         v-if="teamInfo.iconImageUrl"
-        id="icon"
-        :src="`${teamInfo.iconImageUrl}`"
-        class="object-cover"
-        alt="チームアイコン">
-      <label
-        for="teamIconUploader"
-        class="absolute p-3 rounded-full hover:bg-gray-100 hover:bg-opacity-20">
-        <FontAwesomeIcon
-          icon="camera"
-          class="fa-lg text-primary text-opacity-90" />
-      </label>
-      <input
-        id="teamIconUploader"
-        ref="teamIcon"
-        type="file"
-        accept="image/*"
-        class="hidden"
-        @change="handleChangeImage">
+        :icon-type="'teamIcons'"
+        :icon-image-url="teamInfo.iconImageUrl"
+        :switch-on-upload="switchOnUpload" />
     </div>
     <div class="mt-4">
       <label
@@ -89,11 +74,7 @@
 </template>
 
 <script>
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { faCamera } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-
-library.add(faCamera)
+import IconUploader from "~/components/parts/IconUploader"
 
 const teamsModel = {
   iconImageUrl: "",
@@ -103,7 +84,7 @@ const teamsModel = {
 
 export default {
   components: {
-    FontAwesomeIcon
+    IconUploader
   },
   layout: "user",
   props: {
@@ -127,18 +108,6 @@ export default {
     this.teamInfo = this.$store.getters["teamInfo"]
   },
   methods: {
-    async handleChangeImage() {
-      this.onUpload = true
-      const files = this.$refs.teamIcon
-      const fileImage = files.files[0]
-
-      const resUpload = await this.$store.dispatch("image/upload", {
-        fileImage,
-      })
-
-      this.teamInfo.iconImageUrl = resUpload
-      this.onUpload = false
-    },
     async onSubmit() {
       if(this.isError()) return
 
@@ -204,6 +173,9 @@ export default {
       }
 
       return false
+    },
+    switchOnUpload(_onUpload) {
+      this.onUpload = _onUpload
     }
   },
 }
