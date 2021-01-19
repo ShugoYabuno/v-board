@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-14 px-2 hover:bg-primary-10">
+    <div class="h-14 px-2">
       <TeamInfo />
     </div>
     <nuxt-link
@@ -16,9 +16,9 @@
 </template>
 
 <script>
+import TeamInfo from "~/components/modules/TeamInfo"
 import VideoUploader from "~/components/parts/VideoUploader"
 import IconCog from "~/components/parts/fontawesome/Cog"
-import TeamInfo from "~/components/parts/TeamInfo"
 
 export default {
   components: {
