@@ -9,7 +9,8 @@
         v-if="teamInfo.iconImageUrl"
         :icon-type="'teamIcons'"
         :icon-image-url="teamInfo.iconImageUrl"
-        :switch-on-upload="switchOnUpload" />
+        :switch-on-upload="switchOnUpload"
+        :set-image-url="setImageUrl" />
     </div>
     <div class="mt-4">
       <label
@@ -105,7 +106,13 @@ export default {
     }
   },
   async mounted() {
-    this.teamInfo = this.$store.getters["teamInfo"]
+    const teamInfo = await this.$store.getters["teamInfo"]
+    if (teamInfo) {
+      this.teamInfo = {
+        ...this.teamInfo,
+        ...teamInfo
+      }
+    }
   },
   methods: {
     async onSubmit() {
@@ -116,21 +123,21 @@ export default {
       let resEditTeam = {}
       if (this.isCreate) {
         const resAddTeam = await this.$store.dispatch("addTeam", { teamInfo })
-        if(!resAddTeam) return
+        if(this.responseErrorCheck(resAddTeam)) return
 
         const userInfo = this.$store.getters["userInfo"]
-        const followTeamIds = [...userInfo.followTeamIds, resAddTeam.data.documentId]
 
-        const payload = {
-          collectionName: "users",
-          documentId: userInfo.documentId,
+        const addValue = {
+          collectionName: "teamsUsers",
           data: {
-            followTeamIds
+            teamId: resAddTeam.data.documentId,
+            userId: userInfo.documentId
           }
         }
-        await this.$store.dispatch("fsUpdate", payload)
 
-        resEditTeam = resAddTeam
+        await this.$store.dispatch("fsAdd", addValue)
+
+        this.$router.push(`/teams/${resAddTeam.data.slug}`)
       } else {
         const { documentId } = teamInfo
         delete teamInfo.documentId
@@ -139,17 +146,12 @@ export default {
           documentId,
           teamInfo
         })
-        if(!resUpdateTeam) return
+        if (this.responseErrorCheck(resUpdateTeam)) return
 
-        resEditTeam = resUpdateTeam
+        this.$store.dispatch("setTeamInfo", resUpdateTeam.data)
+        this.$router.push(`/teams/${resUpdateTeam.data.slug}`)
       }
 
-      if(resEditTeam.status === "error" && resEditTeam.message === "Slug is exist") {
-          this.error.slug = "そのチームIDは既に存在します。別のIDを試してください。"
-          return
-      } else if (resEditTeam.status !== "success") return
-
-      this.$router.push(`/teams/${resEditTeam.data.slug}`)
     },
     isError() {
       if(!/^[a-z0-9_.-]+$/.test(this.teamInfo.slug)) {
@@ -176,6 +178,17 @@ export default {
     },
     switchOnUpload(_onUpload) {
       this.onUpload = _onUpload
+    },
+    setImageUrl(_url) {
+      this.teamInfo.iconImageUrl = _url
+    },
+    responseErrorCheck(_res) {
+      if(_res.status === "error" && _res.message === "Slug is exist") {
+        this.error.slug = "そのチームIDは既に存在します。別のIDを試してください。"
+        return true
+      } else if (_res.status !== "success") return true
+
+      return false
     }
   },
 }

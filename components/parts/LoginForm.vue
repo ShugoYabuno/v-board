@@ -54,34 +54,33 @@ export default {
           const userInfo = {
             displayName,
             email,
-            photoURL,
+            iconImageUrl: photoURL,
             // emailVerified,
-            googleUid: uid,
-            followTeamIds: []
+            googleUid: uid
           }
-          if(this.teamId) userInfo.followTeamIds.push(this.teamId)
 
-          await this.$store.dispatch("setUserInfo", { userInfo })
           await this.$store.dispatch("logIn")
+          const user = await this.$store.dispatch("setUserInfo", { userInfo })
+          const whereValue = {
+            collectionName: "teamsUsers",
+            key: "userId",
+            value: user.documentId
+          }
+          const followTeamIds = await this.$store.dispatch("fsWhere", whereValue)
+          if(followTeamIds.length === 0) this.$router.push("/teams/register")
 
-          const storeUserInfo = this.$store.getters["userInfo"]
-          const teamIds = storeUserInfo.followTeamIds
-          if (teamIds && teamIds[0]) {
-            const team = await this.$store.dispatch("firestoreFind", {
-              collectionName: "teams",
-              documentId: teamIds[0]
+          const team = await this.$store.dispatch("fsFind", {
+            collectionName: "teams",
+            documentId: followTeamIds[0].teamId
+          })
+
+          // 既にチームをフォローしていた場合、チーム詳細にリダイレクト
+          if (team) {
+            await this.$store.dispatch("setTeamInfo", {
+              teamInfo: team
             })
-
-            // 既にチームをフォローしていた場合、チーム詳細にリダイレクト
-            if (team) {
-              await this.$store.dispatch("setTeamInfo", {
-                teamInfo: team
-              })
-              this.$router.push(`/teams/${team.slug}`)
-            // チームが存在しない場合はチーム登録から
-            } else {
-              this.$router.push("/teams/register")
-            }
+            this.$router.push(`/teams/${team.slug}`)
+          // チームが存在しない場合はチーム登録から
           } else {
             this.$router.push("/teams/register")
           }

@@ -1,7 +1,9 @@
 <template>
   <div
-    class="flex-ij-center w-full h-full overflow-hidden rounded-full bg-gray-20">
+    v-if="isLoaded"
+    class="flex-ij-center w-full h-full overflow-hidden rounded-full border-1-solid bg-gray-20 border-gray-50">
     <img
+      v-if="imgSrc"
       id="icon"
       :src="`${imgSrc}`"
       class="object-cover"
@@ -41,21 +43,26 @@ export default {
     },
     iconImageUrl: {
       type: String,
-      required: true
+      default: ""
     },
     switchOnUpload: {
       type: Function,
       required: true
-    }
+    },
+    setImageUrl: {
+      type: Function,
+      required: true
+    },
   },
   data() {
     return {
-      imgSrc: ""
+      imgSrc: "",
+      isLoaded: false
     }
   },
   async mounted() {
     this.imgSrc = this.iconImageUrl
-    console.log(this.imgSrc)
+    this.isLoaded = true
   },
   methods: {
     async handleChangeImage() {
@@ -71,6 +78,7 @@ export default {
       })
 
       this.imgSrc = resUpload
+      this.setImageUrl(resUpload)
       this.switchOnUpload(false)
     },
   }

@@ -25,8 +25,8 @@ const firestoreService = (() => {
     return data
   }
 
-  const doc2data = async (_doc) => {
-    const data = await _doc.data()
+  const doc2data = (_doc) => {
+    const data = _doc.data()
 
     return {
       documentId: _doc.id,
@@ -50,11 +50,24 @@ const firestoreService = (() => {
     return data
   }
 
+  const where = async (_collectionName, _key, _data) => {
+    const documents = await firestore
+      .collection(_collectionName)
+      .where(_key, "==", _data)
+      .get()
+      .then(function (querySnapShot) {
+        return querySnapShot.docs.map(doc => doc2data(doc))
+      })
+
+    return documents
+  }
+
   return {
     add,
     update,
     doc2data,
-    find
+    find,
+    where
   }
 })()
 

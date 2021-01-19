@@ -53,9 +53,7 @@ export default {
     }
   },
   async mounted() {
-    // await this.$store.dispatch("setTeamInfoBySlug", {
-    //   teamSlug: this.$route.params.teamSlug
-    // })
+    await this.$store.dispatch("initial")
     await this.getVideos()
   },
   methods: {

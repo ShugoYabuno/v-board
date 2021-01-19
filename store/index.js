@@ -28,9 +28,15 @@ export const mutations = {
   },
   switchVisibleSidebar (state, payload) {
     state.isVisibleSidebar = !state.isVisibleSidebar
-  }
+  },
+  isVisibleSidebar (state, payload) {
+    state.isVisibleSidebar = payload
+  },
 }
 export const actions = {
+  initial (context, value) {
+    context.commit("isVisibleSidebar", false)
+  },
   logIn (context, value) {
     context.commit("isAuthed", true)
   },
@@ -56,18 +62,8 @@ export const actions = {
     }
 
     context.commit("userInfo", user)
-    // context.commit("isAuthed", true)
 
-    // return {
-    //   status: "success"
-    // }
-  },
-  async firestoreServiceAdd (context, value) {
-    const { collectionName, data } = value
-    const res = await firestoreService.add(collectionName, data)
-    if (!res) { return }
-
-    return res
+    return user
   },
   async addTeam (context, value) {
     const { teamInfo } = value
@@ -170,11 +166,18 @@ export const actions = {
 
     return
   },
-  async firestoreFind (context, value) {
+  async fsFind (context, value) {
     const { collectionName, documentId } = value
     const resFind = await firestoreService.find(collectionName, documentId)
 
     return resFind
+  },
+  async fsAdd (context, value) {
+    const { collectionName, data } = value
+    const res = await firestoreService.add(collectionName, data)
+    if (!res) { return }
+
+    return res
   },
   async fsUpdate (context, value) {
     const {
@@ -187,15 +190,16 @@ export const actions = {
 
     return resUpdate
   },
-  async find (context, value) {
+  async fsWhere (context, values) {
     const {
       collectionName,
-      documentId
-    } = value
-    const resUpdate = await firestoreService.find(collectionName, documentId)
-    if(!resUpdate) return
+      key,
+      value
+    } = values
+    const resWhere = await firestoreService.where(collectionName, key, value)
+    if(!resWhere) return
 
-    return resUpdate
+    return resWhere
   },
   async setTeamInfo (context, value) {
     const { teamInfo } = value
@@ -203,7 +207,7 @@ export const actions = {
   },
   async switchVisibleSidebar (context, value) {
     context.commit("switchVisibleSidebar")
-  }
+  },
 }
 
 export const getters = {
