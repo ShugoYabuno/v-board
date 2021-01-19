@@ -96,6 +96,7 @@ module.exports = {
         10: secondary1,
       },
       gray: {
+        DEFAULT: gray10,
         100: gray10,
         90: gray9,
         80: gray8,
