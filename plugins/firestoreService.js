@@ -37,9 +37,13 @@ const firestoreService = (() => {
   const docRef2data = async (_docRef) => {
     const data = await _docRef.get().then(doc => doc.data())
 
-    return {
-      documentId: _docRef.id,
-      ...data
+    if(data) {
+      return {
+        documentId: _docRef.id,
+        ...data
+      }
+    } else {
+      return null
     }
   }
 

@@ -6,7 +6,6 @@
       チームアイコン</label>
     <div class="w-24 h-24 mx-auto mt-2">
       <IconUploader
-        v-if="teamInfo.iconImageUrl"
         :icon-type="'teamIcons'"
         :icon-image-url="teamInfo.iconImageUrl"
         :switch-on-upload="switchOnUpload"
