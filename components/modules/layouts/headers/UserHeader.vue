@@ -13,7 +13,7 @@
             alt="ユーザーアイコン" />
         </button>
         <div
-          v-if="visibleUserMenu"
+          v-if="isVisibleUserMenu"
           class="fixed top-12 right-2 w-52 border-1-solid rounde-sm border-secondary-20 bg-gray-20">
           <button
             class="w-full h-8 hover:bg-primary-10"
@@ -78,8 +78,18 @@ export default {
   },
   data() {
     return {
-      visibleUserMenu: false,
+      isVisibleUserMenu: false,
       userInfo: {}
+    }
+  },
+  computed: {
+    gettersVisibleUserMenu() {
+      return this.$store.getters["isVisibleUserMenu"]
+    }
+  },
+  watch: {
+    gettersVisibleUserMenu(_value) {
+      this.isVisibleUserMenu = _value
     }
   },
   async mounted() {
@@ -91,7 +101,7 @@ export default {
       this.$router.push("/")
     },
     switchVisibleUserMenu() {
-      this.visibleUserMenu = !this.visibleUserMenu
+      this.$store.dispatch("switchVisibleUserMenu")
     }
   },
 }

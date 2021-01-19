@@ -9,6 +9,7 @@
         <nuxt />
       </div>
     </div>
+    <VideoUploadTasks />
   </div>
 </template>
 
@@ -16,6 +17,7 @@
 import UserHeader from "~/components/modules/layouts/headers/UserHeader"
 import SpSideBar from "~/components/modules/layouts/sidebar/SpSideBar"
 import PcSideBar from "~/components/modules/layouts/sidebar/PcSideBar"
+import VideoUploadTasks from "~/components/parts/VideoUploadTasks"
 // import Footer from "~/components/modules/layouts/footers/Footer"
 
 export default {
@@ -23,9 +25,10 @@ export default {
     UserHeader,
     SpSideBar,
     PcSideBar,
+    VideoUploadTasks,
     // Footer,
   },
-  middleware: "userAuthenticated",
+  middleware: ["userAuthenticated", "initialize"],
   async mounted() {
     await this.redirectCheckUser()
   }

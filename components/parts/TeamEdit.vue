@@ -10,7 +10,7 @@
         :icon-type="'teamIcons'"
         :icon-image-url="teamInfo.iconImageUrl"
         :switch-on-upload="switchOnUpload"
-        :set-image-url="setImageUrl" />
+        :insert-image-url="insertImageUrl" />
     </div>
     <div class="mt-4">
       <label
@@ -179,7 +179,7 @@ export default {
     switchOnUpload(_onUpload) {
       this.onUpload = _onUpload
     },
-    setImageUrl(_url) {
+    insertImageUrl(_url) {
       this.teamInfo.iconImageUrl = _url
     },
     responseErrorCheck(_res) {

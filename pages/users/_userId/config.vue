@@ -11,10 +11,11 @@
           ユーザーアイコン</label>
         <div class="w-24 h-24 mx-auto mt-2">
           <IconUploader
-            v-if="userInfo.photoURL"
+            v-if="userInfo.iconImageUrl"
             :icon-type="'userIcons'"
-            :icon-image-url="userInfo.photoURL"
-            :switch-on-upload="switchOnUpload" />
+            :icon-image-url="userInfo.iconImageUrl"
+            :switch-on-upload="switchOnUpload"
+            :insert-image-url="insertImageUrl" />
         </div>
         <div class="mt-4">
           <label
@@ -71,7 +72,6 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("initial")
     const userInfo = this.$store.getters["userInfo"]
 
     const {
@@ -83,8 +83,6 @@ export default {
       iconImageUrl,
       displayName
     }
-
-    console.log(this.userInfo)
   },
   methods: {
     async onSubmit() {
@@ -155,7 +153,10 @@ export default {
     },
     switchOnUpload(_onUpload) {
       this.onUpload = _onUpload
-    }
+    },
+    insertImageUrl(_url) {
+      this.userInfo.iconImageUrl = _url
+    },
   },
 }
 </script>

@@ -49,10 +49,12 @@ export default {
     async handleChangeVideos() {
       const fileVideos = this.getFileVideos()
       const team = this.$store.getters["teamInfo"]
+      const user = this.$store.getters["userInfo"]
 
       const resUpload = await this.$store.dispatch("video/upload", {
         fileVideos,
-        publicTeamId: team.documentId
+        publicTeamId: team.documentId,
+        uploaderUserId: user.documentId
       })
 
       this.$store.dispatch("videoUploaded")

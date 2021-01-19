@@ -2,8 +2,9 @@ import { firestore } from "~/plugins/firebase"
 import firestoreService from "~/plugins/firestoreService"
 
 export const state = () => ({
-  isAuthed: "",
+  isAuthed: false,
   isVisibleSidebar: false,
+  isVisibleUserMenu: false,
   sentryVideoUpload: false,
   // googleAccessToken: "",
   userInfo: {},
@@ -32,10 +33,17 @@ export const mutations = {
   isVisibleSidebar (state, payload) {
     state.isVisibleSidebar = payload
   },
+  switchVisibleUserMenu (state, payload) {
+    state.isVisibleUserMenu = !state.isVisibleUserMenu
+  },
+  isVisibleUserMenu (state, payload) {
+    state.isVisibleUserMenu = payload
+  },
 }
 export const actions = {
   initial (context, value) {
     context.commit("isVisibleSidebar", false)
+    context.commit("isVisibleUserMenu", false)
   },
   logIn (context, value) {
     context.commit("isAuthed", true)
@@ -208,6 +216,9 @@ export const actions = {
   async switchVisibleSidebar (context, value) {
     context.commit("switchVisibleSidebar")
   },
+  async switchVisibleUserMenu (context, value) {
+    context.commit("switchVisibleUserMenu")
+  },
 }
 
 export const getters = {
@@ -225,5 +236,8 @@ export const getters = {
   },
   isVisibleSidebar (state) {
     return state.isVisibleSidebar
-  }
+  },
+  isVisibleUserMenu (state) {
+    return state.isVisibleUserMenu
+  },
 }

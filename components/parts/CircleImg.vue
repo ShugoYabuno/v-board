@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full rounded-full overflow-hidden">
     <img
-      v-if="imgSrc"
+      v-if="isLoaded && imgSrc"
       :src="imgSrc"
       :alt="alt"
       class="object-cover">
@@ -19,6 +19,14 @@ export default {
       type: String,
       default: ""
     }
+  },
+  data() {
+    return {
+      isLoaded: false
+    }
+  },
+  mounted() {
+    this.isLoaded = true
   }
 }
 </script>

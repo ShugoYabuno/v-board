@@ -49,7 +49,7 @@ export default {
       type: Function,
       required: true
     },
-    setImageUrl: {
+    insertImageUrl: {
       type: Function,
       required: true
     },
@@ -78,7 +78,7 @@ export default {
       })
 
       this.imgSrc = resUpload
-      this.setImageUrl(resUpload)
+      this.insertImageUrl(resUpload)
       this.switchOnUpload(false)
     },
   }
