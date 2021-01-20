@@ -13,7 +13,7 @@ export default {
   props: {
     imgSrc: {
       type: String,
-      required: true
+      default: ""
     },
     alt: {
       type: String,
