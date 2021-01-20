@@ -11,7 +11,7 @@
           ユーザーアイコン</label>
         <div class="w-24 h-24 mx-auto mt-2">
           <IconUploader
-            v-if="userInfo.iconImageUrl"
+            v-if="isLoaded"
             :icon-type="'userIcons'"
             :icon-image-url="userInfo.iconImageUrl"
             :switch-on-upload="switchOnUpload"
@@ -68,7 +68,8 @@ export default {
       },
       userInfo: {
         ...usersModel
-      }
+      },
+      isLoaded: false
     }
   },
   async mounted() {
@@ -83,6 +84,8 @@ export default {
       iconImageUrl,
       displayName
     }
+
+    this.isLoaded = true
   },
   methods: {
     async onSubmit() {

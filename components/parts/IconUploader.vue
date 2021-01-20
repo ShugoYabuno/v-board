@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="isLoaded"
     class="flex-ij-center w-full h-full overflow-hidden rounded-full border-1-solid bg-gray-20 border-gray-50">
     <img
       v-if="imgSrc"
@@ -57,12 +56,10 @@ export default {
   data() {
     return {
       imgSrc: "",
-      isLoaded: false
     }
   },
   async mounted() {
     this.imgSrc = this.iconImageUrl
-    this.isLoaded = true
   },
   methods: {
     async handleChangeImage() {

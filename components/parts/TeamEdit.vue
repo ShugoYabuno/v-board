@@ -6,6 +6,7 @@
       チームアイコン</label>
     <div class="w-24 h-24 mx-auto mt-2">
       <IconUploader
+        v-if="isLoaded"
         :icon-type="'teamIcons'"
         :icon-image-url="teamInfo.iconImageUrl"
         :switch-on-upload="switchOnUpload"
@@ -101,7 +102,8 @@ export default {
       teamInfo: {
         ...teamsModel
       },
-      onUpload: false
+      onUpload: false,
+      isLoaded: false
     }
   },
   async mounted() {
@@ -112,6 +114,7 @@ export default {
         ...teamInfo
       }
     }
+    this.isLoaded = true
   },
   methods: {
     async onSubmit() {
