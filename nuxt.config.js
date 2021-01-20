@@ -44,6 +44,7 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/eslint-module
     "@nuxtjs/eslint-module",
     "@nuxtjs/tailwindcss",
+    "@nuxtjs/dotenv",
     // [
     //   "@nuxtjs/dotenv",
     //   {
@@ -68,12 +69,7 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     // Doc: https://github.com/nuxt-community/dotenv-module
-    "@nuxtjs/dotenv",
-    "@nuxtjs/style-resources",
   ],
-  styleResources: {
-    // scss: ["~/assets/scss/_index.scss"],
-  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
