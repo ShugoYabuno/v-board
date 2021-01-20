@@ -24,9 +24,7 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [
-    // "~/assets/scss/_index.scss"
-  ],
+  css: [],
   /*
    ** Plugins to load before mounting the App
    */
@@ -94,41 +92,19 @@ module.exports = {
       // プラグインは前もって npm か yarn で dependencies としてインストールしておきます
       plugins: {
         // 値として false を渡すことによりプラグインを無効化します
-        "postcss-url": false,
-        "postcss-nested": {},
-        "postcss-responsive-type": {},
-        "postcss-hexrgba": {},
+        // "postcss-url": false,
+        // "postcss-nested": {},
+        // "postcss-responsive-type": {},
+        // "postcss-hexrgba": {},
       },
       preset: {
         // postcss-preset-env 設定を変更します
         autoprefixer: {
-          grid: true,
+          grid: false,
         },
       },
     },
   },
-  // vuetify: {
-  //   customVariables: ["~/assets/scss/variables.scss"],
-  //   treeShake: true,
-  //   theme: {
-  //     dark: true,
-  //     themes: {
-  //       dark: {
-  //         primary: "#368F8B",
-  //         secondary: "#183446",
-  //         accent: "#FF5722",
-  //         error: "#FF1744",
-  //         warning: "#FFEA00",
-  //         info: "#00B0FF",
-  //         success: "#76FF03",
-  //       },
-  //     },
-  //   },
-  // },
-  // serverMiddleware: [
-  //   // API middleware
-  //   "~/api/index.js",
-  // ],
   devServer: {
     disableHostCheck: true,
   },
