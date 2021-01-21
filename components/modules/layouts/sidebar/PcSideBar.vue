@@ -1,5 +1,5 @@
 <template>
-  <div class="w-60 h-full bg-gray-20">
+  <div class="w-60 h-full bg-white">
     <SidebarContent />
   </div>
 </template>

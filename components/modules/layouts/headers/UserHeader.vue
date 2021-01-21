@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 right-0 left-0 w-full h-12 px-4 z-10 bg-opacity-90 bg-gray-20">
+  <header class="fixed top-0 right-0 left-0 w-full h-12 px-4 z-10 bg-opacity-90 bg-white">
     <nav
       class="flex-i-center h-full w-full mx-auto">
       <MenuBrand />
