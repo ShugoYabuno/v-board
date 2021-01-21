@@ -1,6 +1,8 @@
 <template>
   <div class="flex-i-center w-full h-full">
-    <TeamIcon :img-src="teamInfo.iconImageUrl" />
+    <TeamIcon
+      v-if="isLoaded"
+      :img-src="teamInfo.iconImageUrl" />
     <p
       v-if="teamInfo"
       class="ml-2 text-primary-100">
@@ -19,6 +21,7 @@ export default {
   data() {
     return {
       teamInfo: {},
+      isLoaded: false
     }
   },
   computed: {
@@ -34,6 +37,7 @@ export default {
   async mounted() {
     const teamInfo = this.$store.getters["teamInfo"]
     this.setThisVariables(teamInfo)
+    this.isLoaded = true
   },
   methods: {
     setThisVariables(_teanInfo) {

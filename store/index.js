@@ -6,7 +6,7 @@ export const state = () => ({
   isVisibleSidebar: false,
   isVisibleUserMenu: false,
   sentryVideoUpload: false,
-  // googleAccessToken: "",
+  isVideoShow: false,
   userInfo: {},
   teamInfo: {},
 })
@@ -38,6 +38,9 @@ export const mutations = {
   },
   isVisibleUserMenu (state, payload) {
     state.isVisibleUserMenu = payload
+  },
+  isVideoShow (state, payload) {
+    state.isVideoShow = payload
   },
 }
 export const actions = {
@@ -219,6 +222,9 @@ export const actions = {
   async switchVisibleUserMenu (context, value) {
     context.commit("switchVisibleUserMenu")
   },
+  async isVideoShow(context, value) {
+    context.commit("isVideoShow", value)
+  }
 }
 
 export const getters = {
@@ -239,5 +245,8 @@ export const getters = {
   },
   isVisibleUserMenu (state) {
     return state.isVisibleUserMenu
+  },
+  isVideoShow (state) {
+    return state.isVideoShow
   },
 }

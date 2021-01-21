@@ -4,5 +4,10 @@ export default function ({ store, params }) {
     store.dispatch("setTeamInfoBySlug", {
       teamSlug: params.teamSlug
     })
+    if (params.videoId) {
+      store.dispatch("isVideoShow", true)
+    } else {
+      store.dispatch("isVideoShow", false)
+    }
   }
 }

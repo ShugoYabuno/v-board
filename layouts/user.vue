@@ -1,10 +1,14 @@
 <template>
   <div class="w-screen h-screen pt-12 overflow-y-scroll">
     <UserHeader />
-    <SpSideBar class="block md:hidden" />
     <div class="flex w-full h-full">
+      <SpSideBar
+        class="block"
+        :class="{ 'md:hidden': !isVideoShow }" />
       <!-- pc用 -->
-      <PcSideBar class="hidden md:block" />
+      <PcSideBar
+        class="hidden"
+        :class="{ 'md:block': !isVideoShow }" />
       <div class="flex-grow h-full overflow-scroll">
         <nuxt />
       </div>
@@ -18,7 +22,6 @@ import UserHeader from "~/components/modules/layouts/headers/UserHeader"
 import SpSideBar from "~/components/modules/layouts/sidebar/SpSideBar"
 import PcSideBar from "~/components/modules/layouts/sidebar/PcSideBar"
 import VideoUploadTasks from "~/components/parts/VideoUploadTasks"
-// import Footer from "~/components/modules/layouts/footers/Footer"
 
 export default {
   components: {
@@ -26,11 +29,28 @@ export default {
     SpSideBar,
     PcSideBar,
     VideoUploadTasks,
-    // Footer,
   },
   middleware: ["userAuthenticated", "initialize"],
+  data() {
+    return {
+      isVideoShow: false,
+    }
+  },
+  computed: {
+    gettersIsVideoShow() {
+      return this.$store.getters["isVideoShow"]
+    }
+  },
+  watch: {
+    gettersIsVideoShow(_value) {
+      this.isVideoShow = _value
+    }
+  },
   async mounted() {
     await this.redirectCheckUser()
+    if(this.$route.params && this.$route.params.videoId) {
+      this.isVideoShow = true
+    }
   }
 }
 </script>
