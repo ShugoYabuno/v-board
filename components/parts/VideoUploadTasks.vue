@@ -34,7 +34,6 @@ export default {
   },
   watch: {
     uploadTasks(_val) {
-      console.log(_val)
       this.uploadTasksProgress = _val
     }
   },
