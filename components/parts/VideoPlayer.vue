@@ -30,8 +30,6 @@ export default {
       this.$refs.videoPlayer,
       {
         aspectRatio: "16:9",
-        // autoplay: true,
-        // controls: true,
         ...this.options,
       },
       function onPlayerReady() {
