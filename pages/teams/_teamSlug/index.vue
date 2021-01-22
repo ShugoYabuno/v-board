@@ -1,17 +1,18 @@
 <template>
-  <div class="bg-gray-10 w-full h-screen">
+  <div class="bg-gray-30 w-full h-full">
     <div class="ml-4" />
     <div
       v-if="isLoaded && videos.length >= 1"
       class="flex flex-wrap">
-      <div
+      <nuxt-link
         v-for="(video, index) in videos"
         :key="index"
-        class="w-3/12 p-4">
+        :to="`/teams/${teamSlug}/videos/${video.documentId}`"
+        class="w-3/12 p-4 hover:bg-secondary-10">
         <VideoPlayer
           v-if="video"
           :options="convertVideoOptions(video)" />
-      </div>
+      </nuxt-link>
     </div>
     <div v-if="isLoaded && videos.length === 0">
       <p class="ml-4 pt-4">
@@ -29,6 +30,11 @@ export default {
     VideoPlayer,
   },
   layout: "user",
+  async asyncData({params}) {
+    return {
+      teamSlug: params.teamSlug
+    }
+  },
   data() {
     return {
       teamInfo: {},
@@ -36,11 +42,6 @@ export default {
       videoInput: "",
       isLoaded: false,
     }
-  },
-  async fetch({store, params}) {
-    await store.dispatch("setTeamInfoBySlug", {
-      teamSlug: params.teamSlug
-    })
   },
   computed: {
     sentryVideoUpload: function() {
