@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-ij-center h-full p-20 bg-gray-10">
-    <div class="w-96 bg-secondary-20 p-8 rounded-lg shadow-xl">
+  <div class="flex-ij-center h-full bg-gray-10">
+    <div class="w-10/12 md:w-96 bg-secondary-20 p-8 rounded-lg shadow-xl">
       <h2 class="mb-8 font-semibold text-center text-xl text-gray-90">
         チーム情報の編集
       </h2>
