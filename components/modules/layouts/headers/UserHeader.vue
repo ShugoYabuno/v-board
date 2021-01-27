@@ -85,12 +85,18 @@ export default {
   computed: {
     gettersVisibleUserMenu() {
       return this.$store.getters["isVisibleUserMenu"]
-    }
+    },
+    gettersUserInfo() {
+      return this.$store.getters["userInfo"]
+    },
   },
   watch: {
     gettersVisibleUserMenu(_value) {
       this.isVisibleUserMenu = _value
-    }
+    },
+    gettersUserInfo(_value) {
+      this.userInfo = _value
+    },
   },
   async mounted() {
     this.userInfo = await this.$store.getters["userInfo"]
