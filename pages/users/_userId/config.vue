@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-ij-center h-full p-20 bg-gray-10">
-    <div class="w-96 bg-secondary-20 p-8 rounded-lg shadow-xl">
+  <div class="flex-ij-center h-full bg-gray-10">
+    <div class="w-10/12 md:w-96 bg-secondary-20 p-8 rounded-lg shadow-xl">
       <h2 class="mb-8 font-semibold text-center text-xl text-gray-90">
         ユーザー情報の編集
       </h2>
@@ -76,11 +76,13 @@ export default {
     const userInfo = this.$store.getters["userInfo"]
 
     const {
+      documentId,
       iconImageUrl,
       displayName
     } = userInfo
 
     this.userInfo = {
+      documentId,
       iconImageUrl,
       displayName
     }
@@ -91,65 +93,32 @@ export default {
     async onSubmit() {
       if(this.isError()) return
 
-      const { teamInfo } = this
+      const { userInfo } = this
+      const { documentId } = userInfo
+      delete userInfo.documentId
 
-      let resEditTeam = {}
-      if (this.isCreate) {
-        const resAddTeam = await this.$store.dispatch("addTeam", { teamInfo })
-        if(!resAddTeam) return
+      const resUpdateTeam = await this.$store.dispatch("fsUpdate", {
+        collectionName: "users",
+        documentId,
+        data: userInfo
+      })
+      if(!resUpdateTeam) return
 
-        const userInfo = this.$store.getters["userInfo"]
-        const followTeamIds = [...userInfo.followTeamIds, resAddTeam.data.documentId]
-
-        const payload = {
-          collectionName: "users",
-          documentId: userInfo.documentId,
-          data: {
-            followTeamIds
-          }
-        }
-        await this.$store.dispatch("fsUpdate", payload)
-
-        resEditTeam = resAddTeam
-      } else {
-        const { documentId } = teamInfo
-        delete teamInfo.documentId
-
-        const resUpdateTeam = await this.$store.dispatch("updateTeam", {
-          documentId,
-          teamInfo
-        })
-        if(!resUpdateTeam) return
-
-        resEditTeam = resUpdateTeam
-      }
-
-      if(resEditTeam.status === "error" && resEditTeam.message === "Slug is exist") {
-          this.error.slug = "そのチームIDは既に存在します。別のIDを試してください。"
-          return
-      } else if (resEditTeam.status !== "success") return
-
-      this.$router.push(`/teams/${resEditTeam.data.slug}`)
+      await this.$store.dispatch("setUserInfo", {
+        userInfo: resUpdateTeam
+      })
+      const teamInfo = await this.$store.getters["teamInfo"]
+      this.$router.push(`/teams/${teamInfo.slug}`)
     },
     isError() {
-      if(!/^[a-z0-9_.-]+$/.test(this.teamInfo.slug)) {
-        this.error.slug = "半角英小文字、ピリオド(.)、アンダースコア(_)、ハイフン(-)のみ使用可能です"
+      if(this.userInfo.displayName.length > 30) {
+        this.error.displayName = "ユーザー名は30文字以内で入力してください"
         return true
-      } else if(!this.teamInfo.slug) {
-        this.error.slug = "入力してください"
-        return true
-      } else {
-        this.error.slug = ""
-      }
-
-      if(this.teamInfo.name.length > 30) {
-        this.error.name = "チーム名は50文字以内で入力してください"
-        return true
-      } else if (!this.teamInfo.name) {
-        this.error.name = "入力してください"
+      } else if (!this.userInfo.displayName) {
+        this.error.displayName = "入力してください"
         return true
       } else {
-        this.error.name = ""
+        this.error.displayName = ""
       }
 
       return false

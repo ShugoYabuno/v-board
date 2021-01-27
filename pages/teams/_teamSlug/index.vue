@@ -8,7 +8,7 @@
         v-for="(video, index) in videos"
         :key="index"
         :to="`/teams/${teamSlug}/videos/${video.documentId}`"
-        class="w-3/12 p-4 hover:bg-secondary-10">
+        class="w-full md:w-4/12 lg:w-3/12 p-4 hover:bg-secondary-10">
         <VideoPlayer
           v-if="video"
           :options="convertVideoOptions(video)" />
@@ -72,6 +72,7 @@ export default {
       this.isLoaded = false
 
       const teamInfo = await this.$store.getters["teamInfo"]
+
       const videos = await this.$store.dispatch("video/getByTeam", {
         teamId: teamInfo.documentId
       })
