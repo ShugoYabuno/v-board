@@ -1,13 +1,15 @@
-export default function ({ store, params }) {
+export default async function ({ store, params }) {
   if (process.client) {
-    store.dispatch("initial")
-    store.dispatch("setTeamInfoBySlug", {
-      teamSlug: params.teamSlug
-    })
+    await store.dispatch("initial")
+    if (params.teamSlug) {
+      await store.dispatch("setTeamInfoBySlug", {
+        teamSlug: params.teamSlug
+      })
+    }
     if (params.videoId) {
-      store.dispatch("isVideoShow", true)
+      await store.dispatch("isVideoShow", true)
     } else {
-      store.dispatch("isVideoShow", false)
+      await store.dispatch("isVideoShow", false)
     }
   }
 }
