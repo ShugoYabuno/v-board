@@ -43,7 +43,6 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then(async (result) => {
-          // const googleAccessToken = result.credential.accessToken
           const {
             displayName,
             email,

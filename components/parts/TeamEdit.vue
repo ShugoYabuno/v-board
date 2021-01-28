@@ -122,7 +122,6 @@ export default {
 
       const { teamInfo } = this
 
-      let resEditTeam = {}
       if (this.isCreate) {
         const resAddTeam = await this.$store.dispatch("addTeam", { teamInfo })
         if(this.responseErrorCheck(resAddTeam)) return
@@ -138,7 +137,6 @@ export default {
         }
 
         await this.$store.dispatch("fsAdd", addValue)
-
         this.$router.push(`/teams/${resAddTeam.data.slug}`)
       } else {
         const { documentId } = teamInfo
@@ -150,7 +148,7 @@ export default {
         })
         if (this.responseErrorCheck(resUpdateTeam)) return
 
-        this.$store.dispatch("setTeamInfo", resUpdateTeam.data)
+        await this.$store.dispatch("setTeamInfo", resUpdateTeam.data)
         this.$router.push(`/teams/${resUpdateTeam.data.slug}`)
       }
 
