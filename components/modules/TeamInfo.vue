@@ -30,9 +30,9 @@ export default {
     }
   },
   watch: {
-    updateTeamInfo(_value) {
+    gettersTeamInfo(_value) {
       this.setThisVariables(_value)
-    }
+    },
   },
   async mounted() {
     const teamInfo = this.$store.getters["teamInfo"]

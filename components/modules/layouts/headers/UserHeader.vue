@@ -8,9 +8,7 @@
         <button
           class="w-9 h-9"
           @click="switchVisibleUserMenu">
-          <CircleImg
-            :img-src="userInfo.iconImageUrl"
-            alt="ユーザーアイコン" />
+          <UserIcon />
         </button>
         <div
           v-if="isVisibleUserMenu"
@@ -24,9 +22,7 @@
           </button>
           <div class="flex p-2">
             <div class="w-9 h-9">
-              <CircleImg
-                :img-src="userInfo.iconImageUrl"
-                alt="ユーザーアイコン" />
+              <UserIcon />
             </div>
             <div class="flex-i-center">
               <p class="ml-2 text-primary-100">
@@ -61,7 +57,7 @@
 <script>
 import MenuBrand from "~/components/parts/MenuBrand"
 import IconCog from "~/components/parts/fontawesome/Cog"
-import CircleImg from "~/components/parts/CircleImg"
+import UserIcon from "~/components/modules/UserIcon"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faSignOutAlt, faChevronUp } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -74,7 +70,7 @@ export default {
     FontAwesomeIcon,
     MenuBrand,
     IconCog,
-    CircleImg
+    UserIcon
   },
   data() {
     return {

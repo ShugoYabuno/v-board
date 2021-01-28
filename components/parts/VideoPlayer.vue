@@ -1,10 +1,8 @@
 <template>
-  <div class="video-wrapper">
-    <div class="video-content">
-      <video
-        ref="videoPlayer"
-        class="video-js vjs-big-play-centered" />
-    </div>
+  <div class="w-full h-full">
+    <video
+      ref="videoPlayer"
+      class="video-js vjs-big-play-centered" />
   </div>
 </template>
 

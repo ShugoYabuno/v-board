@@ -24,7 +24,8 @@ library.add(faUsers)
 
 export default {
   components: {
-    CircleImg
+    CircleImg,
+    FontAwesomeIcon
   },
   props: {
     imgSrc: {
