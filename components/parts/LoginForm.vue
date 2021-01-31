@@ -15,8 +15,6 @@
       </p>
     </button>
   </formModal>
-  <!-- <div class="w-96 bg-gray-10 p-8 rounded-lg shadow-xl"> -->
-  <!-- </div> -->
 </template>
 
 <script>
@@ -26,14 +24,6 @@ import formModal from "~/components/modules/SlotFormModal"
 export default {
   components: {
     formModal
-  },
-  data() {
-    return {
-      teamId: ""
-    }
-  },
-  mounted() {
-    this.teamId = this.$route.query.teamid
   },
   methods: {
     logIn() {
@@ -60,25 +50,58 @@ export default {
 
           await this.$store.dispatch("logIn")
           const user = await this.$store.dispatch("setUserInfo", { userInfo })
+
           const whereValue = {
             collectionName: "teamsUsers",
             key: "userId",
             value: user.documentId
           }
-          const followTeamIds = await this.$store.dispatch("fsWhere", whereValue)
-          if(followTeamIds.length === 0) this.$router.push("/teams/register")
+          const teamsUsers = await this.$store.dispatch("fsWhere", whereValue)
+          if(teamsUsers.length === 0) return this.$router.push("/teams/register")
 
-          const team = await this.$store.dispatch("fsFind", {
-            collectionName: "teams",
-            documentId: followTeamIds[0].teamId
+          const teamIds = teamsUsers.map(_team_user => _team_user.teamId)
+          const teamPromises = teamIds.map(_teamId => {
+            return new Promise((resolve, reject) => {
+              this.$store.dispatch("fsFind", {
+                collectionName: "teams",
+                documentId: _teamId
+              }).then(value => {
+                resolve(value)
+              }).catch(e => {
+                console.log(e)
+              })
+            })
           })
+          const teams = await Promise.all(teamPromises).then(value => value)
+
+          if(this.$route.query.team) {
+            const teamSlug = this.$route.query.team
+            const teamSlugValue = {
+              collectionName: "teams",
+              key: "slug",
+              value: teamSlug
+            }
+            const registerdTeams = await this.$store.dispatch("fsWhere", teamSlugValue)
+
+            if (registerdTeams.length >= 1 && !teamIds.includes(registerdTeams[0].documentId)) {
+              const teamsUsersAdd = {
+                collectionName: "teamsUsers",
+                data: {
+                  teamId: registerdTeams[0].documentId,
+                  userId: user.documentId
+                }
+              }
+              const data = await this.$store.dispatch("fsAdd", teamsUsersAdd)
+              console.log(data)
+            }
+          }
 
           // 既にチームをフォローしていた場合、チーム詳細にリダイレクト
-          if (team) {
+          if (teams.length >= 1) {
             await this.$store.dispatch("setTeamInfo", {
-              teamInfo: team
+              teamInfo: teams[0]
             })
-            this.$router.push(`/teams/${team.slug}`)
+            this.$router.push(`/teams/${teams[0].slug}`)
           // チームが存在しない場合はチーム登録から
           } else {
             this.$router.push("/teams/register")
