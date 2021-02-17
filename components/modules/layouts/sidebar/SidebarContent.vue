@@ -62,7 +62,7 @@ export default {
     }
   },
   async mounted() {
-    this.shareLink = `https://v-board.app/sign_in?team=${this.$route.params.teamSlug}&openExternalBrowser=1`
+    this.shareLink = `${location.origin}/sign_in?team=${this.$route.params.teamSlug}&openExternalBrowser=1`
     this.teamInfo = await this.$store.getters["teamInfo"]
     if (this.teamInfo.slug) this.teamSlug = `/${this.teamInfo.slug}`
   },
