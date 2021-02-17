@@ -5,7 +5,7 @@
       v-if="imgSrc"
       id="icon"
       :src="`${imgSrc}`"
-      class="object-cover"
+      class="w-full h-full object-cover"
       alt="チームアイコン">
     <label
       for="teamIconUploader"

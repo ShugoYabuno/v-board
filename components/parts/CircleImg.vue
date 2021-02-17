@@ -4,7 +4,7 @@
       v-if="isLoaded && imgSrc"
       :src="imgSrc"
       :alt="alt"
-      class="object-cover">
+      class="w-full h-full object-cover">
   </div>
 </template>
 
