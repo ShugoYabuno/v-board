@@ -57,10 +57,8 @@ export default {
             value: user.documentId
           }
           const teamsUsers = await this.$store.dispatch("fsWhere", whereValue)
-          if(teamsUsers.length === 0) return this.$router.push("/teams/register")
-
-          const teamIds = teamsUsers.map(_team_user => _team_user.teamId)
-          const teamPromises = teamIds.map(_teamId => {
+          const followTeamIds = teamsUsers.map(_team_user => _team_user.teamId)
+          const teamPromises = followTeamIds.map(_teamId => {
             return new Promise((resolve, reject) => {
               this.$store.dispatch("fsFind", {
                 collectionName: "teams",
@@ -69,12 +67,16 @@ export default {
                 resolve(value)
               }).catch(e => {
                 console.log(e)
+                reject(null)
               })
             })
           })
-          const teams = await Promise.all(teamPromises).then(value => value)
+          const teams = await Promise.all(teamPromises).then(values => {
+            return values.filter(_value => _value && _value !== null)
+          })
 
           if(this.$route.query.team) {
+            console.log(this.$route.query.team)
             const teamSlug = this.$route.query.team
             const teamSlugValue = {
               collectionName: "teams",
@@ -83,7 +85,9 @@ export default {
             }
             const registerdTeams = await this.$store.dispatch("fsWhere", teamSlugValue)
 
-            if (registerdTeams.length >= 1 && !teamIds.includes(registerdTeams[0].documentId)) {
+            console.log(registerdTeams)
+
+            if (registerdTeams.length >= 1 && !followTeamIds.includes(registerdTeams[0].documentId)) {
               const teamsUsersAdd = {
                 collectionName: "teamsUsers",
                 data: {
@@ -91,19 +95,20 @@ export default {
                   userId: user.documentId
                 }
               }
-              const data = await this.$store.dispatch("fsAdd", teamsUsersAdd)
-              console.log(data)
+              await this.$store.dispatch("fsAdd", teamsUsersAdd)
+              this.$router.push(`/teams/${registerdTeams[0].slug}`)
+              return
             }
           }
 
-          // 既にチームをフォローしていた場合、チーム詳細にリダイレクト
-          if (teams.length >= 1) {
+          if (teams && teams.length >= 1) {
+            // 既にチームをフォローしていた場合、チーム詳細にリダイレクト
             await this.$store.dispatch("setTeamInfo", {
               teamInfo: teams[0]
             })
             this.$router.push(`/teams/${teams[0].slug}`)
-          // チームが存在しない場合はチーム登録から
           } else {
+            // チームが存在しない場合はチーム登録から
             this.$router.push("/teams/register")
           }
         })
