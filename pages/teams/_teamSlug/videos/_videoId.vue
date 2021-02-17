@@ -137,8 +137,6 @@ export default {
       const userId = userInfo.documentId
       const content = this.commentContent
 
-      console.log(content)
-
       await firestore
         .collection("videos")
         .doc(videoId)
@@ -149,6 +147,8 @@ export default {
           createdAt: Date.now(),
           updatedAt: Date.now()
         })
+
+      this.commentContent = ""
     },
     async getUserIcon() {
       const userIds = this.comments.map(_comment => _comment.userId)
