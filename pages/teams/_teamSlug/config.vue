@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import Meta from "~/utils/mixins/meta"
 import TeamEdit from "~/components/parts/TeamEdit"
 const teamsModel = {
   slug: "",
@@ -20,6 +21,7 @@ export default {
   components: {
     TeamEdit
   },
+  mixins: [Meta],
   layout: "user",
   data() {
     return {

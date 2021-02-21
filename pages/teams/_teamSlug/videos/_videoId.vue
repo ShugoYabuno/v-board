@@ -31,7 +31,7 @@
                 @click="onDelete(comment.documentId)">
                 <font-awesome-icon
                   icon="times"
-                  class="text-darkbrown fa-sm" />
+                  class="text-red fa-sm" />
               </button>
             </div>
             <p class="-mt-5 leading-5 whitespace-pre-line text-gray">
@@ -128,6 +128,7 @@ export default {
     },
   },
   async mounted() {
+    this.throwAlert("success", "テスト")
     this.userInfo = await this.$store.getters["userInfo"]
     const videoId = this.$route.params.videoId
     firestore.collection("videos")

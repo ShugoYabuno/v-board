@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import Meta from "~/utils/mixins/meta"
 import formModal from "~/components/modules/SlotFormModal"
 import TeamEdit from "~/components/parts/TeamEdit"
 
@@ -18,6 +19,7 @@ export default {
     formModal,
     TeamEdit
   },
+  mixins: [Meta],
   // layout: "user",
 }
 </script>

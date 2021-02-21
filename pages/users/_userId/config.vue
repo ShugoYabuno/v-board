@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import Meta from "~/utils/mixins/meta"
 import IconUploader from "~/components/parts/IconUploader"
 
 const usersModel = {
@@ -59,6 +60,7 @@ export default {
   components: {
     IconUploader
   },
+  mixins: [Meta],
   layout: "user",
   data() {
     return {

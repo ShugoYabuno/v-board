@@ -23,12 +23,14 @@
 </template>
 
 <script>
+import Meta from "~/utils/mixins/meta"
 import VideoPlayer from "~/components/parts/VideoPlayer"
 
 export default {
   components: {
     VideoPlayer,
   },
+  mixins: [Meta],
   layout: "user",
   async asyncData({params}) {
     return {

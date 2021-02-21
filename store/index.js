@@ -7,6 +7,9 @@ export const state = () => ({
   isVisibleUserMenu: false,
   sentryVideoUpload: false,
   isVideoShow: false,
+  isAlertShow: false,
+  alertType: "",
+  alertText: "",
   userInfo: {},
   teamInfo: {},
 })
@@ -41,6 +44,15 @@ export const mutations = {
   },
   isVideoShow (state, payload) {
     state.isVideoShow = payload
+  },
+  isAlertShow (state, payload) {
+    state.isAlertShow = payload
+  },
+  alertType (state, payload) {
+    state.alertType = payload
+  },
+  alertText (state, payload) {
+    state.alertText = payload
   },
 }
 export const actions = {
@@ -248,5 +260,14 @@ export const getters = {
   },
   isVideoShow (state) {
     return state.isVideoShow
+  },
+  isAlertShow (state) {
+    return state.isAlertShow
+  },
+  alertType (state) {
+    return state.alertType
+  },
+  alertText (state) {
+    return state.alertText
   },
 }
