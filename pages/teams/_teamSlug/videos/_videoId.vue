@@ -13,19 +13,27 @@
             v-for="(comment, index) in comments"
             :key="index"
             class="p-2 hover:bg-primary-10">
-            <div class="flex-i-center h-5">
+            <div
+              class="flex-i-center h-5">
               <div class="w-5 h-5">
-                <UserIcon />
+                <CircleImg
+                  :img-src="iconImageUrl(comment.userId)"
+                  :alt="`${displayName(comment.userId)}のアイコン`" />
               </div>
               <p
                 v-if="commentUsers.length >= 1"
                 class="ml-2 text-sm font-bold text-gray-90">
-                {{ displayName(comment) }}
+                {{ displayName(comment.userId) }}
               </p>
+              <button
+                v-if="userInfo.documentId === comment.userId"
+                class="flex-ij-center ml-auto w-4 h-4"
+                @click="onDelete(comment.documentId)">
+                <font-awesome-icon
+                  icon="times"
+                  class="text-darkbrown fa-sm" />
+              </button>
             </div>
-            <!-- <p
-              class="text-gray"
-              v-html="comment.content" /> -->
             <p class="-mt-5 leading-5 whitespace-pre-line text-gray">
               {{ comment.content }}
             </p>
@@ -61,18 +69,21 @@
 
 <script>
 import VideoPlayer from "~/components/parts/VideoPlayer"
+import CircleImg from "~/components/parts/CircleImg"
 import UserIcon from "~/components/modules/UserIcon"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
+import { faPaperPlane, faTimes } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { firestore } from "~/plugins/firebase"
 
 library.add(faPaperPlane)
+library.add(faTimes)
 
 export default {
   components: {
     VideoPlayer,
     FontAwesomeIcon,
+    CircleImg,
     UserIcon
   },
   layout: "user",
@@ -90,27 +101,48 @@ export default {
     return {
       comments: [],
       commentContent: "",
-      commentUsers: []
+      commentUsers: [],
+      userInfo: {}
     }
   },
   computed: {
     displayName() {
-      return function(_comment) {
-        const user = this.commentUsers.find(_commentUser => _comment.userId === _commentUser.documentId)
-        return user.displayName
+      return function(_commentUserId) {
+        const user = this.commentUsers.find(_commentUser => _commentUser.documentId === _commentUserId)
+        if (user) {
+          return user.displayName
+        } else {
+          return ""
+        }
       }
-    }
+    },
+    iconImageUrl() {
+      return function(_commentUserId) {
+        const user = this.commentUsers.find(_commentUser => _commentUser.documentId === _commentUserId)
+        if (user) {
+          return user.iconImageUrl
+        } else {
+          return ""
+        }
+      }
+    },
   },
-  mounted() {
+  async mounted() {
+    this.userInfo = await this.$store.getters["userInfo"]
     const videoId = this.$route.params.videoId
     firestore.collection("videos")
       .doc(videoId)
       .collection("comments")
+      .orderBy("createdAt")
       .onSnapshot(_querySnapShot => {
         _querySnapShot.docChanges().forEach(_change => {
           if(_change.type === "added") {
-            const doc = _change.doc
-            this.comments.push(doc.data())
+            this.comments.push({
+              documentId: _change.doc.id,
+              ..._change.doc.data()
+            })
+          } else if(_change.type === "removed") {
+            this.comments = this.comments.filter(_comment => _comment.documentId !== _change.doc.id)
           }
         })
 
@@ -131,10 +163,8 @@ export default {
       }
     },
     async onSubmit() {
-      const userInfo = await this.$store.getters["userInfo"]
-
       const videoId = this.$route.params.videoId
-      const userId = userInfo.documentId
+      const userId = this.userInfo.documentId
       const content = this.commentContent
 
       await firestore
@@ -149,6 +179,21 @@ export default {
         })
 
       this.commentContent = ""
+    },
+    async onDelete(_commentId) {
+      const videoId = this.$route.params.videoId
+
+      await firestore
+        .collection("videos")
+        .doc(videoId)
+        .collection("comments")
+        .doc(_commentId)
+        .delete()
+        .then(function() {
+          console.log("Document successfully deleted!")
+        }).catch(function(error) {
+          console.error("Error removing document: ", error)
+        })
     },
     async getUserIcon() {
       const userIds = this.comments.map(_comment => _comment.userId)
@@ -174,7 +219,7 @@ export default {
           this.commentUsers.push(_user)
         })
       })
-    }
+    },
   }
 }
 </script>
