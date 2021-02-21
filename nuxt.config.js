@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 module.exports = {
   // mode: "universal",
   /*
@@ -103,5 +105,10 @@ module.exports = {
   },
   devServer: {
     disableHostCheck: true,
+  },
+  // env
+  dotenv: { path: process.cwd() },
+  env: {
+    ...process.env,
   },
 }
