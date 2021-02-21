@@ -85,8 +85,6 @@ export default {
             }
             const registerdTeams = await this.$store.dispatch("fsWhere", teamSlugValue)
 
-            console.log(registerdTeams)
-
             if (registerdTeams.length >= 1 && !followTeamIds.includes(registerdTeams[0].documentId)) {
               const teamsUsersAdd = {
                 collectionName: "teamsUsers",
@@ -97,6 +95,7 @@ export default {
               }
               await this.$store.dispatch("fsAdd", teamsUsersAdd)
               this.$router.push(`/teams/${registerdTeams[0].slug}`)
+              this.throwAlert("success", "チームに参加しました")
               return
             }
           }
