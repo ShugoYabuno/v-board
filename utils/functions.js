@@ -26,7 +26,15 @@ export const customUtil = {
     },
     switchVisibleSidebar() {
       this.$store.dispatch("switchVisibleSidebar")
-    }
+    },
+    throwAlert(_type, _text) {
+      this.$store.commit("isAlertShow", true)
+      this.$store.commit("alertType", _type)
+      this.$store.commit("alertText", _text)
+      setTimeout(() => {
+        this.$store.commit("isAlertShow", false)
+      }, 3500)
+    },
   }
 }
 
