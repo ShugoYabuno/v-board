@@ -28,13 +28,14 @@ const gray4 = "#e2e4ea"
 const gray3 = "#eff1f7"
 const gray2 = "#f3f6fc"
 const gray1 = "#f8fbff"
-const blue = "#4E88A8"
-const darkgreen = "#346B4F"
-const lightgreen = "#5D853E"
+const blue = "#457DB0"
+const darkgreen = "#48A877"
+const lightgreen = "#7FBF49"
 const yellow = "#E6D56A"
-const darkbrown = "#703E38"
-const lightbrown = "#8A6C45"
-const purple = "#9C57A8"
+const red = "#A85247"
+const purple = "#AA45B0"
+const beige = "#B8A84D"
+const orange = "#BF8A47"
 
 module.exports = {
   purge: [
@@ -113,9 +114,10 @@ module.exports = {
       yellow,
       darkgreen,
       lightgreen,
-      darkbrown,
-      lightbrown,
+      red,
       purple,
+      beige,
+      orange
     },
   },
   variants: {
