@@ -14,10 +14,12 @@
       </div>
     </div>
     <VideoUploadTasks />
+    <Alert />
   </div>
 </template>
 
 <script>
+import Alert from "~/components/parts/Alert"
 import UserHeader from "~/components/modules/layouts/headers/UserHeader"
 import SpSideBar from "~/components/modules/layouts/sidebar/SpSideBar"
 import PcSideBar from "~/components/modules/layouts/sidebar/PcSideBar"
@@ -29,6 +31,7 @@ export default {
     SpSideBar,
     PcSideBar,
     VideoUploadTasks,
+    Alert
   },
   middleware: ["userAuthenticated", "initialize"],
   data() {
