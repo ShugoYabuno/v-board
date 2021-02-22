@@ -2,7 +2,7 @@
   <div class="bg-gray-30 w-full h-full">
     <div class="ml-4" />
     <div
-      v-if="isLoaded && videos.length >= 1"
+      v-if="videos.length >= 1"
       class="flex flex-wrap">
       <nuxt-link
         v-for="(video, index) in videos"
@@ -15,7 +15,7 @@
       </nuxt-link>
     </div>
     <div
-      v-if="isLoaded && videos.length === 0"
+      v-if="videos.length === 0"
       class="ml-4">
       <p class="pt-4 text-gray">
         動画をアップロードしましょう
@@ -38,9 +38,15 @@ export default {
   },
   mixins: [Meta],
   layout: "user",
-  async asyncData({params}) {
+  async asyncData({params, store}) {
+    const teamInfo = await store.getters["teamInfo"]
+    const videos = await store.dispatch("video/getByTeam", {
+      teamId: teamInfo.documentId
+    })
+
     return {
-      teamSlug: params.teamSlug
+      teamSlug: params.teamSlug,
+      videos
     }
   },
   data() {
@@ -61,9 +67,9 @@ export default {
       this.getVideos()
     }
   },
-  async mounted() {
-    await this.getVideos()
-  },
+  // async mounted() {
+  //   await this.getVideos()
+  // },
   methods: {
     convertVideoOptions(_video) {
       return {
@@ -77,8 +83,6 @@ export default {
       }
     },
     async getVideos() {
-      this.isLoaded = false
-
       const teamInfo = await this.$store.getters["teamInfo"]
 
       const videos = await this.$store.dispatch("video/getByTeam", {
@@ -86,7 +90,6 @@ export default {
       })
 
       this.videos = videos
-      this.isLoaded = true
     }
   }
 }
