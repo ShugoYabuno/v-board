@@ -51,6 +51,9 @@ module.exports = {
       borderWidth: {
         1: "1px",
       },
+      height: {
+        120: "30rem"
+      }
     },
     colors: {
       primary: {
