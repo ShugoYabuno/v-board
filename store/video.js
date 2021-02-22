@@ -93,6 +93,7 @@ export const actions = {
     const videos = await firestore
       .collection("videos")
       .where("publicTeamId", "==", teamId)
+      .orderBy("createdAt", "desc")
       .get()
       .then(function (querySnapShot) {
         return querySnapShot.docs.map(doc => {
