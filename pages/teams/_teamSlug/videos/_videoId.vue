@@ -20,8 +20,8 @@
           </nuxt-link>
         </div>
       </div>
-      <div class="flex flex-col relative h-96 md:w-1/3 md:h-full bg-gray-10">
-        <div class="flex-grow w-full md:pb-32 overflow-scroll">
+      <div class="flex flex-col relative max-h-120 md:w-1/3 md:h-full md:max-h-screen bg-gray-10">
+        <div class="flex-grow w-full overflow-scroll">
           <div
             v-for="(comment, index) in comments"
             :key="index"
