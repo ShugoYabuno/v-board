@@ -49,19 +49,21 @@ export default {
     async handleChangeVideos() {
       const fileVideos = this.getFileVideos()
       if(this.isError(fileVideos)) return
-      // const team = this.$store.getters["teamInfo"]
-      // const user = this.$store.getters["userInfo"]
 
-      // const resUpload = await this.$store.dispatch("video/upload", {
-      //   fileVideos,
-      //   publicTeamId: team.documentId,
-      //   uploaderUserId: user.documentId
-      // })
+      const team = this.$store.getters["teamInfo"]
+      const user = this.$store.getters["userInfo"]
 
-      // this.$store.dispatch("videoUploaded")
+      const resUpload = await this.$store.dispatch("video/upload", {
+        fileVideos,
+        publicTeamId: team.documentId,
+        uploaderUserId: user.documentId
+      })
+
+      this.$store.dispatch("videoUploaded")
     },
     isError(_fileVideos) {
-      if(!_fileVideos.every(_video => _video.type === "video/mp4")) {
+      const fileVideosArray = Object.keys(_fileVideos).map(_key => _fileVideos[_key])
+      if(!fileVideosArray.every(_video => _video.type === "video/mp4")) {
         this.throwAlert("error", "ファイル形式は.mp4のみです")
         return true
       } else {
