@@ -4,15 +4,17 @@
     <div
       v-if="videos.length >= 1"
       class="flex flex-wrap">
-      <nuxt-link
+      <div
         v-for="(video, index) in videos"
         :key="index"
-        :to="`/teams/${teamSlug}/videos/${video.documentId}`"
         class="w-full md:w-4/12 lg:w-3/12 p-4 hover:bg-secondary-10">
-        <VideoPlayer
-          v-if="video"
-          :options="convertVideoOptions(video)" />
-      </nuxt-link>
+        <nuxt-link
+          :to="`/teams/${teamSlug}/videos/${video.documentId}`">
+          <VideoPlayer
+            v-if="video"
+            :options="convertVideoOptions(video)" />
+        </nuxt-link>
+      </div>
     </div>
     <div
       v-if="videos.length === 0"
