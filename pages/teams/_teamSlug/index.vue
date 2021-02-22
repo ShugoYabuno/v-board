@@ -9,7 +9,8 @@
         :key="index"
         class="w-full md:w-4/12 lg:w-3/12 p-4 hover:bg-secondary-10">
         <nuxt-link
-          :to="`/teams/${teamSlug}/videos/${video.documentId}`">
+          :to="`/teams/${teamSlug}/videos/${video.documentId}`"
+          class="block w-full h-full">
           <VideoPlayer
             v-if="video"
             :options="convertVideoOptions(video)" />
