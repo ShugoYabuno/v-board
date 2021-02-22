@@ -75,9 +75,8 @@ export default {
       return {
         sources: [
           {
-            src: _video.storageUrl,
+            src: `${_video.storageUrl}#t=0.001`,
             type: _video.contentType,
-            controls: true,
           },
         ]
       }
