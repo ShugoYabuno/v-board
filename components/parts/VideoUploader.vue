@@ -48,17 +48,26 @@ export default {
     },
     async handleChangeVideos() {
       const fileVideos = this.getFileVideos()
-      const team = this.$store.getters["teamInfo"]
-      const user = this.$store.getters["userInfo"]
+      if(this.isError(fileVideos)) return
+      // const team = this.$store.getters["teamInfo"]
+      // const user = this.$store.getters["userInfo"]
 
-      const resUpload = await this.$store.dispatch("video/upload", {
-        fileVideos,
-        publicTeamId: team.documentId,
-        uploaderUserId: user.documentId
-      })
+      // const resUpload = await this.$store.dispatch("video/upload", {
+      //   fileVideos,
+      //   publicTeamId: team.documentId,
+      //   uploaderUserId: user.documentId
+      // })
 
-      this.$store.dispatch("videoUploaded")
+      // this.$store.dispatch("videoUploaded")
     },
+    isError(_fileVideos) {
+      if(!_fileVideos.every(_video => _video.type === "video/mp4")) {
+        this.throwAlert("error", "ファイル形式は.mp4のみです")
+        return true
+      } else {
+        return false
+      }
+    }
   },
 }
 </script>
