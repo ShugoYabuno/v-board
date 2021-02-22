@@ -14,10 +14,16 @@
           :options="convertVideoOptions(video)" />
       </nuxt-link>
     </div>
-    <div v-if="isLoaded && videos.length === 0">
-      <p class="ml-4 pt-4">
-        動画がアップロードされていません。
+    <div
+      v-if="isLoaded && videos.length === 0"
+      class="ml-4">
+      <p class="pt-4 text-gray">
+        動画をアップロードしましょう
       </p>
+      <img
+        src="~/assets/images/upload.svg"
+        alt="アップロード"
+        class="w-96 h-96 mr-4">
     </div>
   </div>
 </template>
