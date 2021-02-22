@@ -1,14 +1,27 @@
 <template>
-  <div class="w-full h-full bg-gray-20">
-    <div class="md:flex w-full max-w-screen-xl h-full mx-auto">
-      <div class="md:flex-grow md:h-full p-2">
+  <div class="wrapper w-full bg-gray-20">
+    <div class="md:flex w-full max-w-screen-xl md:h-full overflow-scroll mx-auto">
+      <div class="p-2 md:flex-grow md:h-full md:w-2/3 md:overflow-scroll">
         <VideoPlayer
           v-if="video"
-          class="flex-grow"
-          :options="convertVideoOptions(video)" />
+          class="w-full md:h-96 lg:h-120 flex-i-center"
+          :options="convertVideoOptions(video, true, true)" />
+        <div
+          v-if="videos.length >= 1"
+          class="flex flex-wrap">
+          <nuxt-link
+            v-for="(video, index) in videos"
+            :key="index"
+            :to="`/teams/${teamSlug}/videos/${video.documentId}`"
+            class="hidden md:block w-1/2 md:w-4/12 lg:w-3/12 p-4 hover:bg-secondary-10">
+            <VideoPlayer
+              v-if="video"
+              :options="convertVideoOptions(video)" />
+          </nuxt-link>
+        </div>
       </div>
-      <div class="relative md:w-1/3 h-96 md:h-full bg-gray-10">
-        <div class="w-full h-full md:pb-32 overflow-scroll">
+      <div class="flex flex-col relative h-96 md:w-1/3 md:h-full bg-gray-10">
+        <div class="flex-grow w-full md:pb-32 overflow-scroll">
           <div
             v-for="(comment, index) in comments"
             :key="index"
@@ -39,7 +52,7 @@
             </p>
           </div>
         </div>
-        <div class="md:absolute flex bottom-0 w-full h-32 p-3 opacity-95 bg-white">
+        <div class="flex bottom-0 w-full h-32 p-3 opacity-95 bg-white">
           <textarea
             v-model="commentContent"
             rows="6"
@@ -62,6 +75,19 @@
             </div>
           </div>
         </div>
+      </div>
+      <div
+        v-if="videos.length >= 1"
+        class="flex flex-wrap">
+        <nuxt-link
+          v-for="(video, index) in videos"
+          :key="index"
+          :to="`/teams/${teamSlug}/videos/${video.documentId}`"
+          class="block md:hidden w-1/2 md:w-4/12 lg:w-3/12 p-4 hover:bg-secondary-10">
+          <VideoPlayer
+            v-if="video"
+            :options="convertVideoOptions(video)" />
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -94,7 +120,8 @@ export default {
     })
 
     return {
-      video
+      video,
+      teamSlug: params.teamSlug
     }
   },
   data() {
@@ -102,6 +129,7 @@ export default {
       comments: [],
       commentContent: "",
       commentUsers: [],
+      videos: [],
       userInfo: {}
     }
   },
@@ -128,9 +156,9 @@ export default {
     },
   },
   async mounted() {
-    this.throwAlert("success", "テスト")
     this.userInfo = await this.$store.getters["userInfo"]
     const videoId = this.$route.params.videoId
+    this.getOtherVideos()
     firestore.collection("videos")
       .doc(videoId)
       .collection("comments")
@@ -151,10 +179,10 @@ export default {
       })
   },
   methods: {
-    convertVideoOptions(_video) {
+    convertVideoOptions(_video, autoplay = false, controls = false) {
       return {
-        autoplay: true,
-        controls: true,
+        autoplay,
+        controls,
         sources: [
           {
             src: _video.storageUrl,
@@ -221,12 +249,25 @@ export default {
         })
       })
     },
+    async getOtherVideos() {
+      const teamInfo = await this.$store.getters["teamInfo"]
+
+      const videos = await this.$store.dispatch("video/getByTeam", {
+        teamId: teamInfo.documentId
+      })
+
+      this.videos = videos.filter(_video => _video.documentId !== this.$route.params.videoId)
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .h-30rem {
   height: 30rem;
+}
+
+.wrapper {
+  height: calc(100vh - 3rem);
 }
 </style>
