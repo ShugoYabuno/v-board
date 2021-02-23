@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "NODE_ENV=development nodemon --watch api --exec \"nuxt --hostname 127.0.0.1 --port 3045\"",
+    "pro": "NODE_ENV=production nodemon --watch api --exec \"nuxt --hostname 127.0.0.1 --port 3045\"",
     "build": "nuxt build",
     "start": "nuxt build && nuxt start",
     "generate": "nuxt generate",
