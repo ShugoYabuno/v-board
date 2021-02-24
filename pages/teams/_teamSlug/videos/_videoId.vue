@@ -79,15 +79,15 @@
       <div
         v-if="videos.length >= 1"
         class="flex flex-wrap">
-        <nuxt-link
+        <div
           v-for="(video, index) in videos"
           :key="index"
-          :to="`/teams/${teamSlug}/videos/${video.documentId}`"
           class="block md:hidden w-1/2 md:w-4/12 lg:w-3/12 p-4 hover:bg-secondary-10">
-          <VideoPlayer
-            v-if="video"
+          <VideoListItem
+            :team-slug="teamSlug"
+            :video="video"
             :options="convertVideoOptions(video)" />
-        </nuxt-link>
+        </div>
       </div>
     </div>
   </div>
@@ -95,6 +95,7 @@
 
 <script>
 import VideoPlayer from "~/components/parts/VideoPlayer"
+import VideoListItem from "~/components/modules/VideoListItem"
 import CircleImg from "~/components/parts/CircleImg"
 import UserIcon from "~/components/modules/UserIcon"
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -107,6 +108,7 @@ library.add(faTimes)
 
 export default {
   components: {
+    VideoListItem,
     VideoPlayer,
     FontAwesomeIcon,
     CircleImg,
@@ -185,7 +187,7 @@ export default {
         controls,
         sources: [
           {
-            src: _video.storageUrl,
+            src: `${_video.storageUrl}#t=0.001`,
             type: _video.contentType,
           },
         ]
