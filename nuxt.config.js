@@ -84,6 +84,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
+    // これ書かないとリロードした時にバグる
     extend ( config, { isDev, isClient, isServer } ) {
       if ( isServer ) {
         config.externals = {

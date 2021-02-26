@@ -1,19 +1,16 @@
 <template>
   <div class="bg-gray-30 w-full h-full">
-    <div class="ml-4" />
     <div
       v-if="videos.length >= 1"
       class="flex flex-wrap">
       <div
         v-for="(video, index) in videos"
         :key="index"
-        class="relative w-full md:w-4/12 lg:w-3/12 p-4 hover:bg-secondary-10">
-        <VideoPlayer
-          v-if="video"
+        class="w-full md:w-4/12 lg:w-3/12 p-4 hover:bg-secondary-10">
+        <VideoListItem
+          :team-slug="teamSlug"
+          :video="video"
           :options="convertVideoOptions(video)" />
-        <nuxt-link
-          :to="`/teams/${teamSlug}/videos/${video.documentId}`"
-          class="absolute inset-0 block w-full h-full" />
       </div>
     </div>
     <div
@@ -32,11 +29,11 @@
 
 <script>
 import Meta from "~/utils/mixins/meta"
-import VideoPlayer from "~/components/parts/VideoPlayer"
+import VideoListItem from "~/components/modules/VideoListItem"
 
 export default {
   components: {
-    VideoPlayer,
+    VideoListItem,
   },
   mixins: [Meta],
   layout: "user",
